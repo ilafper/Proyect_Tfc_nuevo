@@ -276,6 +276,12 @@ $(document).ready(function () {
 
     // recoger cada temporada.
     const temporadasTotales = $('.temporada-item');
+
+
+
+
+
+
     for (let i = 0; i < temporadasTotales.length; i++) {
       const item = temporadasTotales[i];
       const tomo = parseInt($(item).find('.tomo-numero').val());
@@ -316,7 +322,7 @@ $(document).ready(function () {
       return;
     }
 
-    // Validar campos obligatorios
+    // campos oblihatorio(autor, nombre, sinopsis)
     const nombre = $('#nombre').val().trim();
     const autor = $('#autor').val().trim();
     const sinopsis = $('#sinopsis').val().trim();
