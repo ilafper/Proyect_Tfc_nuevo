@@ -1,7 +1,6 @@
 $(document).ready(function () {
   const API_URL = 'https://api-tfc-five.vercel.app/api';
   let mangasData = [];
-  let editandoManga = null;
 
   const usuario = JSON.parse(localStorage.getItem('usuario'));
   if (usuario) {
@@ -206,32 +205,19 @@ $(document).ready(function () {
     renderizarCards(mangasFiltrados);
   });
 
-  $('#btnNuevoManga').click(function () {
-    editandoManga = null;
-    $('#modalTitle').text('Nuevo Manga');
-    $('#formManga')[0].reset();
-    $('#mangaId').val('');
-
-    // Limpiar checkboxes de géneros
-    $('input[name="generos"]').prop('checked', false);
-
-    $('#temporadasContainer').html(`
-      <button type="button" class="btn-add-temporada" id="btnAddTemporada">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-          <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-        </svg>
-        Agregar Tomo
-      </button>
-    `);
-    $('#modalManga').addClass('show');
-  });
-
   $('#btnCerrarModal, #btnCancelar').click(function () {
     $('#modalManga').removeClass('show');
   });
 
+
+
+
+
+
   $(document).on('click', '#btnAddTemporada', function () {
+    //longitud actual de temporadas
     const numTemporadas = $('.temporada-item').length;
+    //objeto temporada nueva
     const nuevaTemporada = `
       <div class="temporada-item">
         <div class="temporada-header">
@@ -240,13 +226,14 @@ $(document).ready(function () {
         </div>
         <div class="temporada-inputs">
           <input type="number" class="tomo-numero" value="${numTemporadas + 1}" placeholder="Nº Tomo" min="1" required>
-          <input type="text" class="tomo-capitulos" placeholder="Capítulos (ej: 1,2,3,4,5)" required>
+          <input type="number" class="tomo-capitulos" placeholder="Capítulos (ej: 1,2,3,4,5)" required>
         </div>
       </div>
     `;
     $(this).before(nuevaTemporada);
   });
 
+  //eliminar temporada 
   $(document).on('click', '.btn-remove-temporada', function () {
     $(this).closest('.temporada-item').remove();
   });
@@ -256,31 +243,15 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
   //guardar manga.
   $('.guardarManga').click(async function (e) {
     e.preventDefault();
-
     const temporadas = [];
     let totalCapitulos = 0;
     let totalVolumenes = 0;
 
     // recoger cada temporada.
     const temporadasTotales = $('.temporada-item');
-
-
-
-
-
 
     for (let i = 0; i < temporadasTotales.length; i++) {
       const item = temporadasTotales[i];

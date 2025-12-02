@@ -1,25 +1,10 @@
-/*
- * ============================================
- * PERFIL.CSS - Estilos de la pagina de perfil
- * ============================================
- */
 
-
-/* ============================================
- * CONTENEDOR PRINCIPAL
- * ============================================ */
 
 .perfil-container {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
 }
-
-
-/* ============================================
- * CABECERA DEL PERFIL
- * ============================================ */
-
 .perfil-header {
   display: flex;
   align-items: center;
@@ -39,9 +24,6 @@ body.dark-mode .perfil-header {
 }
 
 
-/* ============================================
- * AVATAR DEL PERFIL
- * ============================================ */
 
 .perfil-avatar {
   position: relative;
@@ -84,9 +66,6 @@ body.dark-mode .btn-cambiar-avatar {
 }
 
 
-/* ============================================
- * INFORMACION DEL PERFIL
- * ============================================ */
 
 .perfil-info {
   flex: 1;
@@ -114,9 +93,10 @@ body.dark-mode .perfil-email {
 }
 
 
-/* ============================================
- * ESTADISTICAS DEL PERFIL
- * ============================================ */
+
+
+
+
 
 .perfil-stats {
   display: flex;
@@ -144,9 +124,6 @@ body.dark-mode .stat-label {
 }
 
 
-/* ============================================
- * SECCION DE FAVORITOS
- * ============================================ */
 
 .favoritos-section {
   background: rgba(255, 255, 255, 0.8);
@@ -217,21 +194,11 @@ body.dark-mode .favoritos-filtros select {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-
-/* ============================================
- * GRID DE FAVORITOS
- * ============================================ */
-
 .favoritos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
-
-
-/* ============================================
- * CARD DE FAVORITO
- * ============================================ */
 
 .favorito-card {
   background: rgba(255, 255, 255, 0.9);
@@ -254,9 +221,6 @@ body.dark-mode .favorito-card {
 }
 
 
-/* ============================================
- * IMAGEN DE LA CARD
- * ============================================ */
 
 .favorito-img-container {
   position: relative;
@@ -274,11 +238,6 @@ body.dark-mode .favorito-card {
 .favorito-card:hover .favorito-img-container img {
   transform: scale(1.05);
 }
-
-
-/* ============================================
- * BOTON QUITAR FAVORITO
- * ============================================ */
 
 .btn-quitar-favorito {
   position: absolute;
@@ -304,11 +263,6 @@ body.dark-mode .favorito-card {
   transform: scale(1.1);
 }
 
-
-/* ============================================
- * BADGES DE ESTADO
- * ============================================ */
-
 .favorito-img-container .estado-badge {
   position: absolute;
   bottom: 10px;
@@ -333,11 +287,6 @@ body.dark-mode .favorito-card {
   background: rgba(245, 158, 11, 0.9);
   color: white;
 }
-
-
-/* ============================================
- * INFORMACION DE LA CARD
- * ============================================ */
 
 .favorito-info {
   padding: 1.25rem;
@@ -368,10 +317,6 @@ body.dark-mode .favorito-autor {
 }
 
 
-/* ============================================
- * GENEROS DE LA CARD
- * ============================================ */
-
 .favorito-generos {
   display: flex;
   flex-wrap: wrap;
@@ -392,11 +337,6 @@ body.dark-mode .favorito-generos .genero-tag {
   background: rgba(59, 130, 246, 0.2);
 }
 
-
-/* ============================================
- * METADATA DE LA CARD
- * ============================================ */
-
 .favorito-meta {
   display: flex;
   gap: 1rem;
@@ -413,11 +353,6 @@ body.dark-mode .favorito-meta {
   align-items: center;
   gap: 0.375rem;
 }
-
-
-/* ============================================
- * ESTADO VACIO (SIN FAVORITOS)
- * ============================================ */
 
 .favoritos-vacio {
   text-align: center;
@@ -467,11 +402,6 @@ body.dark-mode .favoritos-vacio p {
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
-
-/* ============================================
- * MODAL DE MANGA
- * ============================================ */
-
 .modalManga {
   position: fixed;
   top: 0;
@@ -506,11 +436,6 @@ body.dark-mode .modalManga .modal-content {
   background: #1a1a2e;
 }
 
-
-/* ============================================
- * BOTON CERRAR MODAL
- * ============================================ */
-
 .modalManga .cerrarModal {
   position: absolute;
   top: 1rem;
@@ -534,9 +459,7 @@ body.dark-mode .modalManga .modal-content {
 }
 
 
-/* ============================================
- * CABECERA DEL MODAL
- * ============================================ */
+
 
 .modal-header-main {
   display: flex;
@@ -566,10 +489,6 @@ body.dark-mode .modal-info-container h2 {
   color: #e8eaed;
 }
 
-
-/* ============================================
- * SECCIONES DEL MODAL
- * ============================================ */
 
 .modal-sinopsis-section,
 .modal-generos-section,
@@ -601,11 +520,6 @@ body.dark-mode .modal-sinopsis-section p {
   color: #9ca3af;
 }
 
-
-/* ============================================
- * LISTA DE GENEROS EN MODAL
- * ============================================ */
-
 .generos-list {
   display: flex;
   flex-wrap: wrap;
@@ -625,11 +539,6 @@ body.dark-mode .generos-list .genero-tag {
   background: rgba(59, 130, 246, 0.2);
 }
 
-
-/* ============================================
- * SECCION DE EPISODIOS
- * ============================================ */
-
 .episodios-header {
   display: flex;
   justify-content: space-between;
@@ -647,11 +556,6 @@ body.dark-mode .generos-list .genero-tag {
 .toggle-episodios .chevron-icon.rotated {
   transform: rotate(180deg);
 }
-
-
-/* ============================================
- * LISTA DE VOLUMENES
- * ============================================ */
 
 .volumenes-lista {
   display: flex;
@@ -699,10 +603,6 @@ body.dark-mode .volumen-caps {
 }
 
 
-/* ============================================
- * LISTA DE CAPITULOS
- * ============================================ */
-
 .capitulos-lista {
   display: flex;
   flex-wrap: wrap;
@@ -716,12 +616,6 @@ body.dark-mode .volumen-caps {
   border-radius: 6px;
   font-size: 0.75rem;
 }
-
-
-/* ============================================
- * RESPONSIVE - TABLET
- * ============================================ */
-
 @media (max-width: 768px) {
   .perfil-container {
     padding: 1rem;
@@ -762,9 +656,6 @@ body.dark-mode .volumen-caps {
 }
 
 
-/* ============================================
- * RESPONSIVE - MOVIL
- * ============================================ */
 
 @media (max-width: 480px) {
   .perfil-avatar img {

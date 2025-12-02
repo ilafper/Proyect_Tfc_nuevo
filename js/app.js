@@ -14,21 +14,6 @@ $(document).ready(function () {
     $('body').css('overflow', 'auto');
   });
 
-  // Toggle modo claro/oscuro en sidebar mobile
-  $('#ligthModeToggleMobile').on('click', function () {
-    document.body.classList.toggle("dark-mode");
-    const isDark = document.body.classList.contains("dark-mode");
-    const toggleBtn = document.getElementById("ligthModeToggle");
-    
-    if (isDark) {
-      toggleBtn.innerHTML = sunIcon;
-      localStorage.setItem("modo", "oscuro");
-    } else {
-      toggleBtn.innerHTML = moonIcon;
-      localStorage.setItem("modo", "claro");
-    }
-  });
-
   // Modal de perfil
   $('#avatarBtn').on('click', function (e) {
     e.stopPropagation();

@@ -10,14 +10,14 @@ function cambiar(formId) {
 $(document).ready(function () {
     // Toggle mostrar/ocultar contraseña
     $('.toggle-password').on('click', function () {
+        console.log("se pulso");
+        
         const targetId = $(this).data('target');
         const input = $('#' + targetId);
         const eyeIcon = $(this).find('.eye-icon');
         const eyeOffIcon = $(this).find('.eye-off-icon');
-
         if (input.attr('type') === 'password') {
             input.attr('type', 'text');
-
             eyeIcon.hide();
             eyeOffIcon.show();
 
@@ -31,9 +31,14 @@ $(document).ready(function () {
     //iniciar sesión
     $('.checklogin').click(async function (e) {
         e.preventDefault();
-
+        //valores del login.
         let nombre = $('#nombre').val().trim();
         let password = $('#password').val().trim();
+
+
+        console.log("nombre introducido", nombre);
+        console.log("contraseña",password);
+        
         
         try {
             const response = await $.ajax({
@@ -44,8 +49,11 @@ $(document).ready(function () {
             });
             
             if (response.usuario.rol == "user") {
+                console.log("no tiene derechos");
+                
                 window.location.href = "../html/home.html";
             } else if (response.usuario.rol == "admin") {
+                console.log("tiene derechos");
                 window.location.href = "../html/admin.html";
             }
 
@@ -67,13 +75,19 @@ $(document).ready(function () {
 
 
 
-    $('#formManga').click(async function (e) {
+    $('.botonUni').click(async function (e) {
         e.preventDefault();
 
         const nombre = $('#nuevo_nombre').val().trim();
         const email = $('#email_nuevo').val().trim();
         const password1 = $('#contresena1').val();
         const password2 = $('#contrasena2').val();
+        console.log(nombre);
+        console.log(email);
+        console.log(password1);
+        console.log(password2);
+
+        
 
         if (!nombre || !email || !password1 || !password2) {
             alert("Por favor, completa todos los campos.");
