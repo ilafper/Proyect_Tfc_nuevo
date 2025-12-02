@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil - Mis Mangas Favoritos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Joti+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/perfil.css" />
+</head>
+
+<body>
+    
+    <header class="navbar">
+        <button class="menu-hamburguesa" id="btnMenuHamburguesa">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </button>
+
+        <section class="logo">
+            <a href="home.html"><img src="../src/logito.png" alt="Logo" width="90"></a>
+        </section>
+
+        <section class="buscar">
+            <input type="text" id="buscarFavorito" placeholder="Buscar en mis favoritos...">
+        </section>
+
+        <nav class="nav-links">
+            <a href="home.html">Inicio</a>
+            <a href="#">Mangas</a>
+            <a href="perfil.html" class="active">Perfil</a>
+        </nav>
+
+        <button id="ligthModeToggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 21q-3.75 0-6.375-2.625T3 12q0-3.75 2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21Z"/>
+            </svg>
+        </button>
+
+        <section class="avatar" id="avatarBtn">
+            <img src="../src/per.png" alt="avatar">
+        </section>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar-mobile" id="sidebarMobile">
+        <div class="sidebar-mobile-header">
+            <img src="../src/logito.png" alt="Logo">
+            <button class="btn-cerrar-sidebar" id="btnCerrarSidebar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="sidebar-mobile-nav">
+            <a href="home.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5Z"/>
+                </svg>
+                Inicio
+            </a>
+            <a href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19 2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4l3 3l3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 3.5c1.84 0 3.48.96 4.34 2.42c-.43-.07-.88-.11-1.34-.11c-2.94 0-5.5 1.5-7 3.72c-.25-2.3 1.59-6.03 4-6.03z"/>
+                </svg>
+                Comics
+            </a>
+            <a href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19 2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4l3 3l3-3h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 3.5c1.84 0 3.48.96 4.34 2.42c-.43-.07-.88-.11-1.34-.11c-2.94 0-5.5 1.5-7 3.72c-.25-2.3 1.59-6.03 4-6.03z"/>
+                </svg>
+                Mangas
+            </a>
+            <a href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M21 5c-1.11-.35-2.33-.5-3.5-.5c-1.95 0-4.05.4-5.5 1.5c-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5c.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5c1.35-.85 3.8-1.5 5.5-1.5c1.65 0 3.35.3 4.75 1.05c.1.05.15.05.25.05c.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5c-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5c1.2 0 2.4.15 3.5.5v11.5z"/>
+                </svg>
+                Novelas
+            </a>
+            <a href="perfil.html" class="active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/>
+                </svg>
+                Mi Perfil
+            </a>
+        </nav>
+        <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(226, 232, 240, 0.5);">
+            <button id="ligthModeToggleMobile" style="width: 100%; padding: 0.875rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; color: #3b82f6; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 21q-3.75 0-6.375-2.625T3 12q0-3.75 2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21Z"/>
+                </svg>
+                <span>Cambiar Tema</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Modal de perfil -->
+    <section class="modal-perfil" id="modalPerfil">
+        <section class="modal-perfil-content">
+            <p id="nombreUsuarioModal" class="menu-item"></p>
+            <a href="perfil.html" class="menu-item active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/>
+                </svg>
+                <span>Perfil</span>
+            </a>
+            <a href="#" class="menu-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5a3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97c0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1c0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66Z"/>
+                </svg>
+                <span>Configuración</span>
+            </a>
+            <section class="separator"></section>
+            <a href="#" class="menu-item logout">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m7 2v14h7V5h-7M9 7v5H7V7h2m0 6v5H7v-5h2Z"/>
+                </svg>
+                <span>Cerrar sesión</span>
+            </a>
+        </section>
+    </section>
+
+    <main class="perfil-container">
+        <!-- Cabecera del perfil -->
+        <section class="perfil-header">
+            <div class="perfil-avatar">
+                <img src="../src/per.png" alt="Avatar del usuario" id="perfilAvatar">
+                <button class="btn-cambiar-avatar" title="Cambiar avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="perfil-info">
+                <h1 id="nombreUsuario">Usuario</h1>
+                <p class="perfil-email" id="emailUsuario">usuario@email.com</p>
+                <div class="perfil-stats">
+                    <div class="stat">
+                        <span class="stat-numero" id="totalFavoritos">0</span>
+                        <span class="stat-label">Favoritos</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-numero" id="totalVolumenes">0</span>
+                        <span class="stat-label">Volúmenes</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-numero" id="totalCapitulos">0</span>
+                        <span class="stat-label">Capítulos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de favoritos -->
+        <section class="favoritos-section">
+            <div class="favoritos-header">
+                <h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="#e0245e" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    Mis Mangas Favoritos
+                </h2>
+                <div class="favoritos-filtros">
+                    <select id="filtroEstado">
+                        <option value="todos">Todos</option>
+                        <option value="En publicación">En publicación</option>
+                        <option value="Finalizado">Finalizado</option>
+                        <option value="Pausado">Pausado</option>
+                    </select>
+                    <select id="filtroOrden">
+                        <option value="reciente">Más recientes</option>
+                        <option value="nombre">Por nombre</option>
+                        <option value="volumenes">Por volúmenes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="favoritos-grid" id="favoritosGrid">
+                <!-- Los mangas favoritos se cargarán aquí dinámicamente -->
+            </div>
+
+            <div class="favoritos-vacio" id="favoritosVacio" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24">
+                    <path fill="#cbd5e1" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <h3>No tienes mangas favoritos</h3>
+                <p>Explora nuestra colección y añade mangas a tu lista de favoritos</p>
+                <a href="home.html" class="btn-explorar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14z"/>
+                    </svg>
+                    Explorar Mangas
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de manga -->
+    <section class="modalManga" id="modalManga">
+        <section>
+            <div class="modal-content">
+                <button class="cerrarModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"/>
+                    </svg>
+                </button>
+
+                <div class="modal-header-main">
+                    <div class="modal-image-container">
+                        <img src="" alt="" id="modal-manga-image">
+                    </div>
+                    
+                    <div class="modal-info-container">
+                        <h2 id="modal-manga-titulo"></h2>
+                        <div class="modal-estado">
+                            <span class="estado-badge" id="modal-manga-estado"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-sinopsis-section">
+                    <h3>Sinopsis:</h3>
+                    <p id="modal-manga-sinopsis"></p>
+                </div>
+
+                <div class="modal-generos-section">
+                    <h3>Géneros:</h3>
+                    <div class="generos-list" id="modal-generos-list"></div>
+                </div>
+
+                <div class="modal-episodios-section">
+                    <div class="episodios-header">
+                        <h3 id="modal-episodios-titulo">Listado de episodios</h3>
+                        <button class="toggle-episodios">
+                            <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="volumenes-lista" id="modal-volumenes-lista"></div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/perfil.js"></script>
+    <script>
+        const toggleBtn = document.getElementById("ligthModeToggle");
+        const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21q-3.75 0-6.375-2.625T3 12q0-3.75 2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21Z"/></svg>`;
+        const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17q-2.075 0-3.537-1.463T7 12q0-2.075 1.463-3.537T12 7q2.075 0 3.538 1.463T17 12q0 2.075-1.463 3.538T12 17ZM2 13v-2h2v2H2Zm18 0v-2h2v2h-2ZM11 2h2v2h-2V2Zm0 18h2v2h-2v-2ZM6.4 7.75L5 6.35l1.4-1.4l1.4 1.4l-1.4 1.4Zm12.3 12.3l-1.4-1.4l1.4-1.4l1.4 1.4l-1.4 1.4Zm-1.4-12.3l-1.4-1.4l1.4-1.4l1.4 1.4l-1.4 1.4ZM5 19.65l1.4-1.4l1.4 1.4l-1.4 1.4l-1.4-1.4Z"/></svg>`;
+
+        // Modo oscuro por defecto
+        if (localStorage.getItem("modo") === "claro") {
+            // Solo modo claro si el usuario lo eligió explícitamente
+            toggleBtn.innerHTML = moonIcon;
+        } else {
+            // Modo oscuro por defecto
+            document.body.classList.add("dark-mode");
+            toggleBtn.innerHTML = sunIcon;
+        }
+
+        toggleBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                toggleBtn.innerHTML = sunIcon;
+                localStorage.setItem("modo", "oscuro");
+            } else {
+                toggleBtn.innerHTML = moonIcon;
+                localStorage.setItem("modo", "claro");
+            }
+        });
+    </script>
+</body>
+
+</html>
