@@ -60,7 +60,14 @@ $(document).ready(function () {
         }
     });
     //nuevo usuario
-    $('.checkregis').click(async function (e) {
+
+
+
+
+
+
+
+    $('#formManga').click(async function (e) {
         e.preventDefault();
 
         const nombre = $('#nuevo_nombre').val().trim();

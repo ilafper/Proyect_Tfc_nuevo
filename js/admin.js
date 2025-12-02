@@ -28,7 +28,7 @@ $(document).ready(function () {
     const toggleBtn = document.getElementById("ligthModeToggle");
     const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21q-3.75 0-6.375-2.625T3 12q0-3.75 2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21Z"/></svg>`;
     const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17q-2.075 0-3.537-1.463T7 12q0-2.075 1.463-3.537T12 7q2.075 0 3.538 1.463T17 12q0 2.075-1.463 3.538T12 17ZM2 13v-2h2v2H2Zm18 0v-2h2v2h-2ZM11 2h2v2h-2V2Zm0 18h2v2h-2v-2ZM6.4 7.75L5 6.35l1.4-1.4l1.4 1.4l-1.4 1.4Zm12.3 12.3l-1.4-1.4l1.4-1.4l1.4 1.4l-1.4 1.4Zm-1.4-12.3l-1.4-1.4l1.4-1.4l1.4 1.4l-1.4 1.4ZM5 19.65l1.4-1.4l1.4 1.4l-1.4 1.4l-1.4-1.4Z"/></svg>`;
-    
+
     if (isDark) {
       toggleBtn.innerHTML = sunIcon;
       localStorage.setItem("modo", "oscuro");
@@ -62,7 +62,7 @@ $(document).ready(function () {
   function mostrarModalMensaje(titulo, mensaje, tipo) {
     const iconoSuccess = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#10b981" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
     const iconoError = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#ef4444" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
-    
+
     $('#modalMensajeTitulo').text(titulo);
     $('#modalMensajeTexto').text(mensaje);
     $('#modalMensajeIcono').html(tipo === 'success' ? iconoSuccess : iconoError);
@@ -70,7 +70,7 @@ $(document).ready(function () {
   }
 
   // Mostrar modal de confirmación para eliminar.
-  
+
   function mostrarModalEliminar(mangaId, nombreManga) {
     $('#eliminarMangaId').val(mangaId);
     $('#eliminarMangaNombre').text(nombreManga);
@@ -103,15 +103,19 @@ $(document).ready(function () {
       return;
     }
 
-    mangas.forEach(manga => {
+    for (let i = 0; i < mangas.length; i++) {
+      const manga = mangas[i];
 
       const generos = Array.isArray(manga.genero) ? manga.genero : [];
-      const generosHTML = generos.slice(0, 2).map(genero => 
-        `<span class="genero-tag">${genero}</span>`
-      ).join('');
-      
+      let generosHTML = '';
+
+      // Crear HTML de géneros (máximo 2)
+      for (let j = 0; j < generos.length && j < 2; j++) {
+        generosHTML += `<span class="genero-tag">${generos[j]}</span>`;
+      }
+
       const extraGeneros = generos.length > 2 ? `<span class="genero-tag">+${generos.length - 2}</span>` : '';
-      
+
       const estadoClass = manga.estado === 'En publicación' ? 'publicacion' : manga.estado === 'Finalizado' ? 'finalizado' : 'pausado';
 
       const row = `
@@ -139,18 +143,26 @@ $(document).ready(function () {
         </tr>
       `;
       tbody.append(row);
-    });
+    }
   }
 
   function renderizarCards(mangas) {
     const container = $('#mangasCards');
     container.empty();
 
-    mangas.forEach(manga => {
+    for (let i = 0; i < mangas.length; i++) {
+      const manga = mangas[i];
       const generos = Array.isArray(manga.genero) ? manga.genero : [];
-      const generosHTML = generos.slice(0, 2).join(', ');
-      const estadoClass = manga.estado === 'En publicación' ? 'publicacion' : 
-                         manga.estado === 'Finalizado' ? 'finalizado' : 'pausado';
+
+      // Unir primeros 2 géneros
+      let generosHTML = '';
+      for (let j = 0; j < generos.length && j < 2; j++) {
+        if (j > 0) generosHTML += ', ';
+        generosHTML += generos[j];
+      }
+
+      const estadoClass = manga.estado === 'En publicación' ? 'publicacion' :
+        manga.estado === 'Finalizado' ? 'finalizado' : 'pausado';
 
       const card = `
         <div class="manga-card">
@@ -175,15 +187,21 @@ $(document).ready(function () {
         </div>
       `;
       container.append(card);
-    });
+    }
   }
 
   $('#buscarManga').on('input', function () {
     const termino = $(this).val().toLowerCase();
-    const mangasFiltrados = mangasData.filter(manga => 
-      manga.nombre.toLowerCase().includes(termino) ||
-      manga.autor.toLowerCase().includes(termino)
-    );
+    const mangasFiltrados = [];
+
+    for (let i = 0; i < mangasData.length; i++) {
+      const manga = mangasData[i];
+      if (manga.nombre.toLowerCase().includes(termino) ||
+        manga.autor.toLowerCase().includes(termino)) {
+        mangasFiltrados.push(manga);
+      }
+    }
+
     renderizarTabla(mangasFiltrados);
     renderizarCards(mangasFiltrados);
   });
@@ -193,6 +211,10 @@ $(document).ready(function () {
     $('#modalTitle').text('Nuevo Manga');
     $('#formManga')[0].reset();
     $('#mangaId').val('');
+
+    // Limpiar checkboxes de géneros
+    $('input[name="generos"]').prop('checked', false);
+
     $('#temporadasContainer').html(`
       <button type="button" class="btn-add-temporada" id="btnAddTemporada">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
@@ -202,7 +224,6 @@ $(document).ready(function () {
       </button>
     `);
     $('#modalManga').addClass('show');
-    renderGeneros();
   });
 
   $('#btnCerrarModal, #btnCancelar').click(function () {
@@ -230,28 +251,98 @@ $(document).ready(function () {
     $(this).closest('.temporada-item').remove();
   });
 
-  $('#formManga').submit(async function (e) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //guardar manga.
+  $('.guardarManga').click(async function (e) {
     e.preventDefault();
 
     const temporadas = [];
-    $('.temporada-item').each(function () {
-      const tomo = parseInt($(this).find('.tomo-numero').val());
-      const capitulosStr = $(this).find('.tomo-capitulos').val();
-      const capitulos = capitulosStr.split(',').map(c => parseInt(c.trim())).filter(c => !isNaN(c));
-      
-      temporadas.push({ tomo, capitulos });
-    });
+    let totalCapitulos = 0;
+    let totalVolumenes = 0;
 
-    const generosStr = $('#genero').val();
-    const generos = generosStr.split(',').map(g => g.trim()).filter(g => g.length > 0);
+    // recoger cada temporada.
+    const temporadasTotales = $('.temporada-item');
+    for (let i = 0; i < temporadasTotales.length; i++) {
+      const item = temporadasTotales[i];
+      const tomo = parseInt($(item).find('.tomo-numero').val());
+      const capitulosStr = $(item).find('.tomo-capitulos').val();
+
+      const capitulosArray = [];
+      if (capitulosStr) {
+        const numeros = capitulosStr.split(',');
+        for (let j = 0; j < numeros.length; j++) {
+          const num = parseInt(numeros[j].trim());
+          if (!isNaN(num)) {
+            capitulosArray.push(num);
+          }
+        }
+      }
+
+      totalCapitulos += capitulosArray.length;
+      totalVolumenes++;
+      temporadas.push({ tomo, capitulos: capitulosArray });
+    }
+
+    // Validar que haya al menos una temporada
+    if (totalVolumenes === 0) {
+      mostrarModalMensaje('Error', 'Debes agregar al menos un tomo', 'error');
+      return;
+    }
+
+   
+    const generos = [];
+    const checkboxesGeneros = $('input[name="generos"]:checked');
+    for (let i = 0; i < checkboxesGeneros.length; i++) {
+      generos.push(checkboxesGeneros[i].value);
+    }
+
+    // Validar que haya al menos un género
+    if (generos.length === 0) {
+      mostrarModalMensaje('Error', 'Debes seleccionar al menos un género', 'error');
+      return;
+    }
+
+    // Validar campos obligatorios
+    const nombre = $('#nombre').val().trim();
+    const autor = $('#autor').val().trim();
+    const sinopsis = $('#sinopsis').val().trim();
+
+    if (!nombre) {
+      mostrarModalMensaje('Error', 'El nombre del manga es obligatorio', 'error');
+      return;
+    }
+
+    if (!autor) {
+      mostrarModalMensaje('Error', 'El autor es obligatorio', 'error');
+      return;
+    }
+
+    if (!sinopsis) {
+      mostrarModalMensaje('Error', 'La sinopsis es obligatoria', 'error');
+      return;
+    }
 
     const mangaData = {
-      nombre: $('#nombre').val().trim(),
-      autor: $('#autor').val().trim(),
+      nombre: nombre,
+      autor: autor,
       genero: generos,
-      sinopsis: $('#sinopsis').val().trim(),
-      volumenes: parseInt($('#volumenes').val()),
-      capitulos: parseInt($('#capitulos').val()),
+      sinopsis: sinopsis,
+      volumenes: totalVolumenes,
+      capitulos: totalCapitulos,
       editorial: $('#editorial').val().trim(),
       demografia: $('#demografia').val(),
       estado: $('#estado').val(),
@@ -259,124 +350,45 @@ $(document).ready(function () {
       temporadas: temporadas
     };
 
-    try {
-      const mangaId = $('#mangaId').val();
-      const method = mangaId ? 'PUT' : 'POST';
-      const url = mangaId ? `${API_URL}/mangas/${mangaId}` : `${API_URL}/mangas`;
+    console.log('Datos del manga a guardar:', mangaData);
 
-      const response = await fetch(url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(mangaData)
+    try {
+      
+      const response = await $.ajax({
+        type: 'POST',
+        url: `${API_URL}/nuevomanga`,
+        contentType: 'application/json',
+        data: JSON.stringify(mangaData)
       });
 
-      if (response.ok) {
-        $('#modalManga').removeClass('show');
-        mostrarModalMensaje('Éxito', mangaId ? 'Manga actualizado correctamente' : 'Manga creado correctamente', 'success');
-        cargarMangas();
-      } else {
-        const error = await response.json();
-        mostrarModalMensaje('Error', error.mensaje || 'No se pudo guardar el manga', 'error');
-      }
+      console.log('Respuesta del servidor:', response);
+
+      // Cerrar el modal
+      $('#modalManga').removeClass('show');
+
+      // Mostrar mensaje de éxito
+      mostrarModalMensaje('Éxito', 'Manga creado correctamente', 'success');
+
+      // Recargar la lista de mangas
+      cargarMangas();
+
     } catch (error) {
       console.error('Error al guardar manga:', error);
-      mostrarModalMensaje('Error', 'Error al conectar con el servidor', 'error');
+
+      let mensajeError = 'Error al guardar el manga';
+      if (error.responseJSON && error.responseJSON.mensaje) {
+        mensajeError = error.responseJSON.mensaje;
+      }
+
+      mostrarModalMensaje('Error', mensajeError, 'error');
     }
   });
 
-  // Función para editar manga
-  async function editarManga(mangaId) {
-    try {
-      const response = await fetch(`${API_URL}/mangas/${mangaId}`);
-      const manga = await response.json();
 
-      editandoManga = manga;
-      $('#modalTitle').text('Editar Manga');
-      $('#mangaId').val(manga._id);
-      $('#nombre').val(manga.nombre);
-      $('#autor').val(manga.autor);
-      $('#genero').val(Array.isArray(manga.genero) ? manga.genero.join(', ') : '');
-      $('#sinopsis').val(manga.sinopsis);
-      $('#volumenes').val(manga.volumenes);
-      $('#capitulos').val(manga.capitulos);
-      $('#editorial').val(manga.editorial || '');
-      $('#demografia').val(manga.demografia || 'Shonen');
-      $('#estado').val(manga.estado || 'En publicación');
-      $('#tipo').val(manga.tipo || 'manga');
 
-      const temporadas = Array.isArray(manga.temporadas) ? manga.temporadas : [];
-      const temporadasHTML = temporadas.map(temp => `
-        <div class="temporada-item">
-          <div class="temporada-header">
-            <strong>Tomo ${temp.tomo}</strong>
-            <button type="button" class="btn-remove-temporada">Eliminar</button>
-          </div>
-          <div class="temporada-inputs">
-            <input type="number" class="tomo-numero" value="${temp.tomo}" placeholder="Nº Tomo" min="1" required>
-            <input type="text" class="tomo-capitulos" value="${Array.isArray(temp.capitulos) ? temp.capitulos.join(',') : ''}" placeholder="Capítulos" required>
-          </div>
-        </div>
-      `).join('');
 
-      $('#temporadasContainer').html(`
-        ${temporadasHTML}
-        <button type="button" class="btn-add-temporada" id="btnAddTemporada">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-          </svg>
-          Agregar Tomo
-        </button>
-      `);
 
-      $('#modalManga').addClass('show');
-      // renderizar géneros marcando los que ya tiene el manga
-      renderGeneros(Array.isArray(manga.genero) ? manga.genero : []);
-    } catch (error) {
-      console.error('Error al cargar manga:', error);
-      mostrarModalMensaje('Error', 'Error al cargar el manga', 'error');
-    }
-  }
-
-  // Renderiza la lista de géneros como checkboxes dentro de .lista-generos
-  function renderGeneros(selected = []) {
-    const container = $('.lista-generos');
-    if (!container.length) return;
-
-    const html = GENEROS.map(g => {
-      const slug = g.toLowerCase().replace(/\s+/g, '-');
-      const isChecked = selected.includes(g) ? 'checked' : '';
-      return `
-        <div class="generoChech">
-          <input type="checkbox" id="genero-${slug}" name="generos" value="${g}" class="checkbox-input" ${isChecked}>
-          <label for="genero-${slug}" class="checkbox-label">
-            <span class="genre-name">${g}</span>
-          </label>
-        </div>
-      `;
-    }).join('');
-
-    container.html(html + '<small>Selecciona uno o varios géneros que describan el manga</small>');
-  }
-
-  // Función para eliminar manga
-  async function eliminarManga(mangaId) {
-    try {
-      const response = await fetch(`${API_URL}/mangas/${mangaId}`, {
-        method: 'DELETE'
-      });
-
-      if (response.ok) {
-        mostrarModalMensaje('Éxito', 'Manga eliminado correctamente', 'success');
-        cargarMangas();
-      } else {
-        mostrarModalMensaje('Error', 'Error al eliminar el manga', 'error');
-      }
-    } catch (error) {
-      console.error('Error al eliminar manga:', error);
-      mostrarModalMensaje('Error', 'Error al conectar con el servidor', 'error');
-    }
-  }
-
+  
   // Evento delegado para botón editar
   $(document).on('click', '.btn-editar', function () {
     const mangaId = $(this).data('id');
@@ -408,5 +420,7 @@ $(document).ready(function () {
   });
 
   cargarMangas();
+
+
 
 });
