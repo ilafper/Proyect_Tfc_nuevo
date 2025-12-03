@@ -481,6 +481,9 @@
     flex-wrap: wrap;
   }
 
+
+
+
   .stat {
     flex: 1;
     min-width: 80px;
@@ -498,7 +501,7 @@
   }
 }
 
-/* MODAL DE MANGA */
+/* estilo modal mangas */
 
 .modalManga {
   position: fixed;

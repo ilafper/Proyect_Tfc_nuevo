@@ -71,7 +71,7 @@
             </a>
         </nav>
     </aside>
-
+    
     <section class="modal-perfil" id="modalPerfil">
         <section class="modal-perfil-content">
             <p id="nombreUsuario" class="menu-item"></p>
@@ -82,6 +82,10 @@
                 <span>Vista Usuario</span>
             </a>
             <section class="separator"></section>
+
+
+
+
             <a href="#" class="menu-item logout">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                     <path fill="currentColor"
@@ -91,6 +95,7 @@
             </a>
         </section>
     </section>
+
 
     <main class="admin-container">
         <section class="admin-header">
@@ -127,7 +132,9 @@
         <section class="mangas-cards" id="mangasCards">
         </section>
     </main>
+    
 
+    
     <div class="mooodal" id="modalManga">
         <div class="modal-form">
             <div class="modal-form-header">
@@ -179,7 +186,7 @@
                     <label>Géneros *</label>
                     <section class="lista-generos">
 
-                        <!-- Géneros principales -->
+                       
                         <div class="generoChech">
                             <input type="checkbox" id="genero-shonen" name="generos" value="Shonen"
                                 class="checkbox-input">
@@ -207,6 +214,9 @@
                             </label>
                         </div>
 
+
+
+
                         <div class="generoChech">
                             <input type="checkbox" id="genero-josei" name="generos" value="Josei"
                                 class="checkbox-input">
@@ -225,7 +235,7 @@
                             </label>
                         </div>
 
-                        <!-- Géneros temáticos -->
+                        
                         <div class="generoChech">
                             <input type="checkbox" id="genero-accion" name="generos" value="Acción"
                                 class="checkbox-input">
@@ -453,14 +463,9 @@
         </div>
     </div>
 
-
-
-
-
-
-
     <!-- Modal de confirmación para eliminar -->
     <div class="mooodal" id="modalEliminar">
+
         <div class="modal-confirm">
             <input type="hidden" id="eliminarMangaId">
             <div class="modal-confirm-icon">
@@ -468,19 +473,22 @@
                     <path fill="#ef4444" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
                 </svg>
             </div>
+
+
+
+            
             <h3>¿Eliminar manga?</h3>
             <p>¿Estás seguro de que deseas eliminar "<span id="eliminarMangaNombre"></span>"?</p>
             <p class="modal-confirm-warning">Esta acción no se puede deshacer.</p>
             <div class="modal-confirm-actions">
                 <button type="button" class="btn-cancelar" id="btnCancelarEliminar">Cancelar</button>
                 <button type="button" class="btn-eliminar-confirm" id="btnConfirmarEliminar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"> <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" /></svg>
                     Eliminar
                 </button>
+
             </div>
+
         </div>
     </div>
 
