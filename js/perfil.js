@@ -1,12 +1,9 @@
-
 $(document).ready(function () {
-  
   
   let API_URL = 'https://api-tfc-five.vercel.app/api';
   let favoritosData = [];
   let usuario = JSON.parse(localStorage.getItem('usuario'));
 
-  
   if (!usuario) {
     window.location.href = '../html/login.html';
     return;
@@ -17,6 +14,7 @@ $(document).ready(function () {
   $('#nombreUsuarioModal').text(usuario.nombre || 'Usuario');
   $('#emailUsuario').text(usuario.email || 'usuario@email.com');
 
+  
 
   $('#btnMenuHamburguesa').on('click', function () {
     $('#sidebarMobile').addClass('show');
@@ -30,23 +28,7 @@ $(document).ready(function () {
     $('body').css('overflow', 'auto');
   });
 
-
-  $('#ligthModeToggleMobile').on('click', function () {
-    document.body.classList.toggle("dark-mode");
-    let isDark = document.body.classList.contains("dark-mode");
-    let toggleBtn = document.getElementById("ligthModeToggle");
-    let moonIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21q-3.75 0-6.375-2.625T3 12q0-3.75 2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21Z"/></svg>';
-    let sunIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17q-2.075 0-3.537-1.463T7 12q0-2.075 1.463-3.537T12 7q2.075 0 3.538 1.463T17 12q0 2.075-1.463 3.538T12 17ZM2 13v-2h2v2H2Zm18 0v-2h2v2h-2ZM11 2h2v2h-2V2Zm0 18h2v2h-2v-2ZM6.4 7.75L5 6.35l1.4-1.4l1.4 1.4l-1.4 1.4Zm12.3 12.3l-1.4-1.4l1.4-1.4l1.4 1.4l-1.4 1.4Zm-1.4-12.3l-1.4-1.4l1.4-1.4l1.4 1.4l-1.4 1.4ZM5 19.65l1.4-1.4l1.4 1.4l-1.4 1.4l-1.4-1.4Z"/></svg>';
-    
-    if (isDark) {
-      toggleBtn.innerHTML = sunIcon;
-      localStorage.setItem("modo", "oscuro");
-    } else {
-      toggleBtn.innerHTML = moonIcon;
-      localStorage.setItem("modo", "claro");
-    }
-  });
-
+  
 
   $('#avatarBtn').on('click', function (e) {
     e.stopPropagation();
@@ -63,14 +45,13 @@ $(document).ready(function () {
     e.stopPropagation();
   });
 
-
   
+
   $('.logout').click(function () {
     localStorage.removeItem('usuario');
     window.location.href = "../html/login.html";
   });
-  
-  // Cargar favoritos del usuario
+
   function cargarFavoritos() {
     let listaFav = usuario.lista_Fav || [];
     
@@ -85,9 +66,6 @@ $(document).ready(function () {
     actualizarEstadisticas(listaFav);
   }
 
-
-
-  // Renderizar los mangas favoritos
   function renderizarFavoritos(mangas) {
     let grid = $('#favoritosGrid');
     grid.empty();
@@ -104,25 +82,19 @@ $(document).ready(function () {
       let manga = mangas[i];
       let generos = Array.isArray(manga.genero) ? manga.genero : [];
       
-      // Crear HTML de generos
       let generosHTML = '';
       let maxGeneros = generos.length > 2 ? 2 : generos.length;
       for (let j = 0; j < maxGeneros; j++) {
         generosHTML += '<span class="genero-tag">' + generos[j] + '</span>';
       }
       
-      let extraGeneros = '';
-      if (generos.length > 2) {
-        extraGeneros = '<span class="genero-tag">+' + (generos.length - 2) + '</span>';
-      }
-      
-      // Determinar clase de estado
+      let extraGeneros = generos.length > 2 
+        ? '<span class="genero-tag">+' + (generos.length - 2) + '</span>' 
+        : '';
+
       let estadoClass = 'pausado';
-      if (manga.estado === 'En publicacion') {
-        estadoClass = 'publicacion';
-      } else if (manga.estado === 'Finalizado') {
-        estadoClass = 'finalizado';
-      }
+      if (manga.estado === 'En publicacion') estadoClass = 'publicacion';
+      if (manga.estado === 'Finalizado') estadoClass = 'finalizado';
 
       let card = '';
       card += '<div class="favorito-card" data-manga=\'' + JSON.stringify(manga) + '\'>';
@@ -141,32 +113,34 @@ $(document).ready(function () {
       card += '    <div class="favorito-generos">' + generosHTML + extraGeneros + '</div>';
       card += '    <div class="favorito-meta">';
       card += '      <span>';
-      card += '        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">';
-      card += '          <path fill="currentColor" d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2zm0 14H5V5c0-.806.55-.988 1-1h13v12z"/>';
-      card += '        </svg>';
+      card += '        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path fill="currentColor" d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2zm0 14H5V5c0-.806.55-.988 1-1h13v12z"/></svg>';
       card += '        ' + (manga.volumenes || 0) + ' vol.';
       card += '      </span>';
       card += '      <span>';
-      card += '        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">';
-      card += '          <path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>';
-      card += '        </svg>';
+      card += '        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>';
       card += '        ' + (manga.capitulos || 0) + ' cap.';
       card += '      </span>';
       card += '    </div>';
       card += '  </div>';
       card += '</div>';
-      
+
       grid.append(card);
     }
   }
 
-  // Mostrar estado vacio
+  /* ----------------------------------------
+   * VACÍO
+   * ---------------------------------------- */
+
   function mostrarVacio() {
     $('#favoritosGrid').hide();
     $('#favoritosVacio').show();
   }
 
-  // Actualizar estadisticas del perfil
+  /* ----------------------------------------
+   * ESTADÍSTICAS
+   * ---------------------------------------- */
+
   function actualizarEstadisticas(mangas) {
     let totalFav = mangas.length;
     let totalVol = 0;
@@ -182,33 +156,25 @@ $(document).ready(function () {
     $('#totalCapitulos').text(totalCap);
   }
 
-
   /* ----------------------------------------
    * QUITAR DE FAVORITOS
    * ---------------------------------------- */
+
   $(document).on('click', '.btn-quitar-favorito', function (e) {
     e.stopPropagation();
     let mangaId = $(this).data('id');
-    
-    if (!confirm('Quieres quitar este manga de tus favoritos?')) {
-      return;
-    }
 
-    // Actualizar localmente
-    let nuevaLista = [];
-    for (let i = 0; i < usuario.lista_Fav.length; i++) {
-      if (usuario.lista_Fav[i]._id !== mangaId) {
-        nuevaLista.push(usuario.lista_Fav[i]);
-      }
-    }
-    
+    if (!confirm('¿Quieres quitar este manga de tus favoritos?')) return;
+
+    let nuevaLista = usuario.lista_Fav.filter(m => m._id !== mangaId);
+
     usuario.lista_Fav = nuevaLista;
     localStorage.setItem('usuario', JSON.stringify(usuario));
+
     favoritosData = nuevaLista;
     renderizarFavoritos(favoritosData);
     actualizarEstadisticas(favoritosData);
 
-    // Intentar sincronizar con el servidor
     $.ajax({
       url: API_URL + '/usuarios/' + usuario._id + '/favoritos/' + mangaId,
       method: 'DELETE',
@@ -218,66 +184,54 @@ $(document).ready(function () {
     });
   });
 
-
   /* ----------------------------------------
    * MODAL DE MANGA
    * ---------------------------------------- */
-  
-  // Abrir modal al hacer clic en una card
+
   $(document).on('click', '.favorito-card', function (e) {
-    if ($(e.target).closest('.btn-quitar-favorito').length) {
-      return;
-    }
-    let manga = $(this).data('manga');
-    abrirModalManga(manga);
+    if ($(e.target).closest('.btn-quitar-favorito').length) return;
+    abrirModalManga($(this).data('manga'));
   });
 
-  // Funcion para abrir el modal
   function abrirModalManga(manga) {
     $('#modal-manga-image').attr('src', '../src/frieren.png');
     $('#modal-manga-titulo').text(manga.nombre);
     $('#modal-manga-estado').text(manga.estado || 'Desconocido');
     $('#modal-manga-sinopsis').text(manga.sinopsis || 'Sin sinopsis disponible');
 
-    // Generos
-    let generos = Array.isArray(manga.genero) ? manga.genero : [];
     let generosHTML = '';
-    for (let i = 0; i < generos.length; i++) {
-      generosHTML += '<span class="genero-tag">' + generos[i] + '</span>';
-    }
+    (manga.genero || []).forEach(g => {
+      generosHTML += '<span class="genero-tag">' + g + '</span>';
+    });
     $('#modal-generos-list').html(generosHTML);
 
-    // Temporadas/Volumenes
-    let temporadas = Array.isArray(manga.temporadas) ? manga.temporadas : [];
+    let temporadas = manga.temporadas || [];
     let volumenesHTML = '';
-    
+
     if (temporadas.length > 0) {
-      for (let i = 0; i < temporadas.length; i++) {
-        let temp = temporadas[i];
-        let capitulos = Array.isArray(temp.capitulos) ? temp.capitulos : [];
-        
-        let capitulosHTML = '';
-        for (let j = 0; j < capitulos.length; j++) {
-          capitulosHTML += '<span class="capitulo-item">Cap. ' + capitulos[j] + '</span>';
-        }
-        
-        volumenesHTML += '<div class="volumen-item">';
-        volumenesHTML += '  <div class="volumen-header">';
-        volumenesHTML += '    <span class="volumen-numero">Tomo ' + temp.tomo + '</span>';
-        volumenesHTML += '    <span class="volumen-caps">' + capitulos.length + ' capitulos</span>';
-        volumenesHTML += '  </div>';
-        volumenesHTML += '  <div class="capitulos-lista">' + capitulosHTML + '</div>';
-        volumenesHTML += '</div>';
-      }
+      temporadas.forEach(temp => {
+        let capsHTML = '';
+        (temp.capitulos || []).forEach(c => {
+          capsHTML += '<span class="capitulo-item">Cap. ' + c + '</span>';
+        });
+
+        volumenesHTML += `
+          <div class="volumen-item">
+            <div class="volumen-header">
+              <span class="volumen-numero">Tomo ${temp.tomo}</span>
+              <span class="volumen-caps">${(temp.capitulos || []).length} capitulos</span>
+            </div>
+            <div class="capitulos-lista">${capsHTML}</div>
+          </div>`;
+      });
       $('#modal-volumenes-lista').html(volumenesHTML);
     } else {
-      $('#modal-volumenes-lista').html('<p style="color: #64748b; text-align: center;">No hay informacion de volumenes</p>');
+      $('#modal-volumenes-lista').html('<p style="color:#64748b; text-align:center;">No hay información de volumenes</p>');
     }
 
     $('#modalManga').addClass('show');
   }
 
-  // Cerrar modal
   $(document).on('click', '.cerrarModal', function () {
     $('#modalManga').removeClass('show');
   });
@@ -288,89 +242,49 @@ $(document).ready(function () {
     }
   });
 
-  // Toggle lista de episodios
   $(document).on('click', '.toggle-episodios', function () {
     $(this).closest('.modal-episodios-section').find('.volumenes-lista').toggleClass('collapsed');
     $(this).find('.chevron-icon').toggleClass('rotated');
   });
 
-
   /* ----------------------------------------
-   * BUSQUEDA Y FILTROS
+   * BUSQUEDA
    * ---------------------------------------- */
-  
-  // Busqueda en favoritos
+
   $('#buscarFavorito').on('input', function () {
     let termino = $(this).val().toLowerCase();
-    
-    if (termino === '') {
-      renderizarFavoritos(favoritosData);
-      return;
-    }
 
-    let filtrados = [];
-    for (let i = 0; i < favoritosData.length; i++) {
-      let manga = favoritosData[i];
-      let nombreMatch = manga.nombre.toLowerCase().indexOf(termino) !== -1;
-      let autorMatch = manga.autor.toLowerCase().indexOf(termino) !== -1;
-      
-      if (nombreMatch || autorMatch) {
-        filtrados.push(manga);
-      }
-    }
+    if (!termino) return renderizarFavoritos(favoritosData);
+
+    let filtrados = favoritosData.filter(m =>
+      m.nombre.toLowerCase().includes(termino) ||
+      m.autor.toLowerCase().includes(termino)
+    );
     renderizarFavoritos(filtrados);
   });
 
-  // Filtro por estado
-  $('#filtroEstado').on('change', function () {
-    aplicarFiltros();
-  });
+  $('#filtroEstado, #filtroOrden').on('change', aplicarFiltros);
 
-  // Filtro por orden
-  $('#filtroOrden').on('change', function () {
-    aplicarFiltros();
-  });
-
-  // Aplicar filtros
   function aplicarFiltros() {
     let estado = $('#filtroEstado').val();
     let orden = $('#filtroOrden').val();
 
-    // Copiar array
-    let filtrados = [];
-    for (let i = 0; i < favoritosData.length; i++) {
-      filtrados.push(favoritosData[i]);
-    }
+    let filtrados = [...favoritosData];
 
-    // Filtrar por estado
     if (estado !== 'todos') {
-      let temp = [];
-      for (let i = 0; i < filtrados.length; i++) {
-        if (filtrados[i].estado === estado) {
-          temp.push(filtrados[i]);
-        }
-      }
-      filtrados = temp;
+      filtrados = filtrados.filter(m => m.estado === estado);
     }
 
-    // Ordenar
     if (orden === 'nombre') {
-      filtrados.sort(function(a, b) {
-        return a.nombre.localeCompare(b.nombre);
-      });
+      filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
     } else if (orden === 'volumenes') {
-      filtrados.sort(function(a, b) {
-        return (b.volumenes || 0) - (a.volumenes || 0);
-      });
+      filtrados.sort((a, b) => (b.volumenes || 0) - (a.volumenes || 0));
     }
 
     renderizarFavoritos(filtrados);
   }
 
 
-  /* ----------------------------------------
-   * INICIALIZACION
-   * ---------------------------------------- */
   cargarFavoritos();
 
 });

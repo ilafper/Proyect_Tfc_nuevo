@@ -75,7 +75,7 @@ $(document).ready(function () {
 
 
 
-    $('.botonUni').click(async function (e) {
+    $('.botonUni2').click(async function (e) {
         e.preventDefault();
 
         const nombre = $('#nuevo_nombre').val().trim();
