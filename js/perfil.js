@@ -10,9 +10,9 @@ $(document).ready(function () {
   }
 
   // Cargar datos del usuario en la pagina
-  $('#nombreUsuario').text(usuario.nombre || 'Usuario');
-  $('#nombreUsuarioModal').text(usuario.nombre || 'Usuario');
-  $('#emailUsuario').text(usuario.email || 'usuario@email.com');
+  $('#nombreUsuario').text(usuario.nombre);
+  $('#nombreUsuarioModal').text(usuario.nombre);
+  $('#emailUsuario').text(usuario.email);
 
   
 
@@ -27,8 +27,6 @@ $(document).ready(function () {
     $('#sidebarOverlay').removeClass('show');
     $('body').css('overflow', 'auto');
   });
-
-  
 
   $('#avatarBtn').on('click', function (e) {
     e.stopPropagation();
@@ -62,13 +60,15 @@ $(document).ready(function () {
     }
 
     favoritosData = listaFav;
+    console.log(favoritosData);
+    
     mostrarMangasFavUsuario(listaFav);
     actualizarEstadisticas(listaFav);
   }
 
   function mostrarMangasFavUsuario(mangas) {
-    let grid = $('#favoritosGrid');
-    grid.empty();
+    let favoritos = $('#favoritosGrid');
+    favoritos.empty();
 
     if (mangas.length === 0) {
       mostrarVacio();
@@ -76,7 +76,8 @@ $(document).ready(function () {
     }
 
     $('#favoritosVacio').hide();
-    grid.show();
+
+    favoritos.show();
 
     for (let i = 0; i < mangas.length; i++) {
       let manga = mangas[i];
@@ -113,33 +114,33 @@ $(document).ready(function () {
       card += '    <div class="favorito-generos">' + generosHTML + extraGeneros + '</div>';
       card += '    <div class="favorito-meta">';
       card += '      <span>';
-      card += '        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path fill="currentColor" d="M19 2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1H21V4c0-1.103-.897-2-2-2zm0 14H5V5c0-.806.55-.988 1-1h13v12z"/></svg>';
       card += '        ' + (manga.volumenes || 0) + ' vol.';
       card += '      </span>';
       card += '      <span>';
-      card += '        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>';
       card += '        ' + (manga.capitulos || 0) + ' cap.';
       card += '      </span>';
       card += '    </div>';
       card += '  </div>';
       card += '</div>';
 
-      grid.append(card);
+      favoritos.append(card);
     }
   }
 
-  /* ----------------------------------------
-   * VACÍO
-   * ---------------------------------------- */
+
 
   function mostrarVacio() {
     $('#favoritosGrid').hide();
     $('#favoritosVacio').show();
   }
 
-  /* ----------------------------------------
-   * ESTADÍSTICAS
-   * ---------------------------------------- */
+
+
+
+
+
+
+
 
   function actualizarEstadisticas(mangas) {
     let totalFav = mangas.length;
@@ -156,9 +157,7 @@ $(document).ready(function () {
     $('#totalCapitulos').text(totalCap);
   }
 
-  /* ----------------------------------------
-   * QUITAR DE FAVORITOS
-   * ---------------------------------------- */
+
 
   $(document).on('click', '.btn-quitar-favorito', function (e) {
     e.stopPropagation();
@@ -184,53 +183,12 @@ $(document).ready(function () {
     });
   });
 
-  /* ----------------------------------------
-   * MODAL DE MANGA
-   * ---------------------------------------- */
+
 
   $(document).on('click', '.favorito-card', function (e) {
     if ($(e.target).closest('.btn-quitar-favorito').length) return;
     abrirModalManga($(this).data('manga'));
   });
-
-  function abrirModalManga(manga) {
-    $('#modal-manga-image').attr('src', '../src/frieren.png');
-    $('#modal-manga-titulo').text(manga.nombre);
-    $('#modal-manga-estado').text(manga.estado || 'Desconocido');
-    $('#modal-manga-sinopsis').text(manga.sinopsis || 'Sin sinopsis disponible');
-
-    let generosHTML = '';
-    (manga.genero || []).forEach(g => {
-      generosHTML += '<span class="genero-tag">' + g + '</span>';
-    });
-    $('#modal-generos-list').html(generosHTML);
-
-    let temporadas = manga.temporadas || [];
-    let volumenesHTML = '';
-
-    if (temporadas.length > 0) {
-      temporadas.forEach(temp => {
-        let capsHTML = '';
-        (temp.capitulos || []).forEach(c => {
-          capsHTML += '<span class="capitulo-item">Cap. ' + c + '</span>';
-        });
-
-        volumenesHTML += `
-          <div class="volumen-item">
-            <div class="volumen-header">
-              <span class="volumen-numero">Tomo ${temp.tomo}</span>
-              <span class="volumen-caps">${(temp.capitulos || []).length} capitulos</span>
-            </div>
-            <div class="capitulos-lista">${capsHTML}</div>
-          </div>`;
-      });
-      $('#modal-volumenes-lista').html(volumenesHTML);
-    } else {
-      $('#modal-volumenes-lista').html('<p style="color:#64748b; text-align:center;">No hay información de volumenes</p>');
-    }
-
-    $('#modalManga').addClass('show');
-  }
 
   $(document).on('click', '.cerrarModal', function () {
     $('#modalManga').removeClass('show');
@@ -247,9 +205,7 @@ $(document).ready(function () {
     $(this).find('.chevron-icon').toggleClass('rotated');
   });
 
-  /* ----------------------------------------
-   * BUSQUEDA
-   * ---------------------------------------- */
+  
 
   $('#buscarFavorito').on('input', function () {
     let termino = $(this).val().toLowerCase();
@@ -263,26 +219,6 @@ $(document).ready(function () {
     mostrarMangasFavUsuario(filtrados);
   });
 
-  $('#filtroEstado, #filtroOrden').on('change', aplicarFiltros);
-
-  function aplicarFiltros() {
-    let estado = $('#filtroEstado').val();
-    let orden = $('#filtroOrden').val();
-
-    let filtrados = [...favoritosData];
-
-    if (estado !== 'todos') {
-      filtrados = filtrados.filter(m => m.estado === estado);
-    }
-
-    if (orden === 'nombre') {
-      filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
-    } else if (orden === 'volumenes') {
-      filtrados.sort((a, b) => (b.volumenes || 0) - (a.volumenes || 0));
-    }
-
-    mostrarMangasFavUsuario(filtrados);
-  }
 
 
   cargarFavoritos();

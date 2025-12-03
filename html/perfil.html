@@ -47,6 +47,8 @@
         <div class="sidebar-mobile-header">
             <img src="../src/logito.png" alt="Logo">
             <button class="btn-cerrar-sidebar" id="btnCerrarSidebar">
+
+
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z"/>
                 </svg>
@@ -134,7 +136,8 @@
             <div class="perfil-info">
                 <h1 id="nombreUsuario">Usuario</h1>
                 <p class="perfil-email" id="emailUsuario">usuario@email.com</p>
-                <div class="perfil-stats">
+                
+                <div class="perfilDatos">
                     <div class="stat">
                         <span class="stat-numero" id="totalFavoritos">0</span>
                         <span class="stat-label">Favoritos</span>
@@ -160,22 +163,13 @@
                     </svg>
                     Mis Mangas Favoritos
                 </h2>
-                <div class="favoritos-filtros">
-                    <select id="filtroEstado">
-                        <option value="todos">Todos</option>
-                        <option value="En publicación">En publicación</option>
-                        <option value="Finalizado">Finalizado</option>
-                        <option value="Pausado">Pausado</option>
-                    </select>
-                    <select id="filtroOrden">
-                        <option value="reciente">Más recientes</option>
-                        <option value="nombre">Por nombre</option>
-                        <option value="volumenes">Por volúmenes</option>
-                    </select>
-                </div>
+
             </div>
 
             <div class="favoritos-grid" id="favoritosGrid">
+
+
+
                 <!-- Los mangas favoritos se cargarán aquí dinámicamente -->
             </div>
 
