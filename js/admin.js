@@ -20,23 +20,6 @@ $(document).ready(function () {
     $('body').css('overflow', 'auto');
   });
 
-  // Toggle modo claro/oscuro en sidebar mobile
-  $('#ligthModeToggleMobile').on('click', function () {
-    document.body.classList.toggle("dark-mode");
-    const isDark = document.body.classList.contains("dark-mode");
-    const toggleBtn = document.getElementById("ligthModeToggle");
-    const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21q-3.75 0-6.375-2.625T3 12q0-3.75 2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21Z"/></svg>`;
-    const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17q-2.075 0-3.537-1.463T7 12q0-2.075 1.463-3.537T12 7q2.075 0 3.538 1.463T17 12q0 2.075-1.463 3.538T12 17ZM2 13v-2h2v2H2Zm18 0v-2h2v2h-2ZM11 2h2v2h-2V2Zm0 18h2v2h-2v-2ZM6.4 7.75L5 6.35l1.4-1.4l1.4 1.4l-1.4 1.4Zm12.3 12.3l-1.4-1.4l1.4-1.4l1.4 1.4l-1.4 1.4Zm-1.4-12.3l-1.4-1.4l1.4-1.4l1.4 1.4l-1.4 1.4ZM5 19.65l1.4-1.4l1.4 1.4l-1.4 1.4l-1.4-1.4Z"/></svg>`;
-
-    if (isDark) {
-      toggleBtn.innerHTML = sunIcon;
-      localStorage.setItem("modo", "oscuro");
-    } else {
-      toggleBtn.innerHTML = moonIcon;
-      localStorage.setItem("modo", "claro");
-    }
-  });
-
   $('#avatarBtn').on('click', function (e) {
     e.stopPropagation();
     $('#modalPerfil').toggleClass('show');
@@ -57,7 +40,7 @@ $(document).ready(function () {
     window.location.href = "../html/login.html";
   });
 
-  // Función para mostrar modal de mensaje
+  // Función para mostrar modal de mensaje.
   function mostrarModalMensaje(titulo, mensaje, tipo) {
     const iconoSuccess = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#10b981" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
     const iconoError = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#ef4444" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
@@ -68,22 +51,14 @@ $(document).ready(function () {
     $('#modalMensaje').addClass('show');
   }
 
-  // Mostrar modal de confirmación para eliminar.
-
-  function mostrarModalEliminar(mangaId, nombreManga) {
-    $('#eliminarMangaId').val(mangaId);
-    $('#eliminarMangaNombre').text(nombreManga);
-    $('#modalEliminar').addClass('show');
-  }
-
   function cargarMangas() {
     $.ajax({
       url: `${API_URL}/mangas`,
       method: 'GET',
       success: function (mangas) {
         mangasData = mangas;
-        renderizarTabla(mangas);
-        renderizarCards(mangas);
+        mostrarTablaMangas(mangas);
+        mostrarTarjetasMangas(mangas);
       },
 
       error: function (err) {
@@ -93,7 +68,7 @@ $(document).ready(function () {
     });
   }
 
-  function renderizarTabla(mangas) {
+  function mostrarTablaMangas(mangas) {
     const tbody = $('#mangasTableBody');
     tbody.empty();
 
@@ -145,7 +120,7 @@ $(document).ready(function () {
     }
   }
 
-  function renderizarCards(mangas) {
+  function mostrarTarjetasMangas(mangas) {
     const container = $('#mangasCards');
     container.empty();
 
@@ -201,8 +176,8 @@ $(document).ready(function () {
       }
     }
 
-    renderizarTabla(mangasFiltrados);
-    renderizarCards(mangasFiltrados);
+    mostrarTablaMangas(mangasFiltrados);
+    mostrarTarjetasMangas(mangasFiltrados);
   });
 
   $('#btnCerrarModal, #btnCancelar').click(function () {

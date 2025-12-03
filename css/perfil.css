@@ -1,33 +1,48 @@
-
+/* CONTENEDOR DE PERFIL */
 
 .perfil-container {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
 }
+
+/* HEADER DEL PERFIL */
+
 .perfil-header {
   display: flex;
   align-items: center;
   gap: 2rem;
-  background: rgba(255, 255, 255, 0.8);
+  background: linear-gradient(145deg, rgba(22, 22, 35, 0.95) 0%, rgba(30, 30, 50, 0.9) 100%);
   backdrop-filter: blur(20px);
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(226, 232, 240, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  position: relative;
+  overflow: hidden;
 }
 
-body.dark-mode .perfil-header {
-  background: rgba(15, 15, 26, 0.8);
-  border-color: rgba(45, 40, 94, 0.5);
+.perfil-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7, #6366f1);
+  background-size: 300% 100%;
+  animation: gradientMove 3s ease infinite;
 }
 
-
+@keyframes gradientMove {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
 
 .perfil-avatar {
   position: relative;
-  flex-shrink: 0;
 }
 
 .perfil-avatar img {
@@ -35,197 +50,211 @@ body.dark-mode .perfil-header {
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid rgba(104, 49, 102, 0.3);
-  box-shadow: 0 4px 16px rgba(104, 49, 102, 0.2);
+  border: 4px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3),
+              0 0 0 4px rgba(99, 102, 241, 0.1);
+  transition: all 0.3s ease;
+}
+
+.perfil-avatar:hover img {
+  border-color: rgba(99, 102, 241, 0.6);
+  transform: scale(1.02);
 }
 
 .btn-cambiar-avatar {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 36px;
-  height: 36px;
+  bottom: 4px;
+  right: 4px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border: 3px solid #151526;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  border: 3px solid white;
-  color: white;
+  padding: 0.5rem;
   cursor: pointer;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-}
-
-body.dark-mode .btn-cambiar-avatar {
-  border-color: #1a1a2e;
+  color: white;
 }
 
 .btn-cambiar-avatar:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5);
 }
-
-
 
 .perfil-info {
   flex: 1;
 }
 
 .perfil-info h1 {
-  margin: 0 0 0.5rem 0;
-  font-size: 2rem;
-  color: #1e293b;
+  color: #f1f5f9;
+  font-size: 1.75rem;
   font-weight: 700;
-}
-
-body.dark-mode .perfil-info h1 {
-  color: #e8eaed;
+  margin: 0 0 0.25rem 0;
 }
 
 .perfil-email {
-  margin: 0 0 1.5rem 0;
-  color: #64748b;
-  font-size: 1rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin: 0;
 }
-
-body.dark-mode .perfil-email {
-  color: #9ca3af;
-}
-
-
-
-
-
-
 
 .perfil-stats {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
 }
 
 .stat {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stat:hover {
+  background: rgba(99, 102, 241, 0.15);
+  transform: translateY(-2px);
 }
 
 .stat-numero {
-  display: block;
-  font-size: 1.75rem;
+  color: #a5b4fc;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #3b82f6;
+  line-height: 1.2;
 }
 
 .stat-label {
-  font-size: 0.875rem;
-  color: #64748b;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-body.dark-mode .stat-label {
-  color: #9ca3af;
-}
-
-
+/* SECCIÓN DE FAVORITOS */
 
 .favoritos-section {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(22, 22, 35, 0.95) 0%, rgba(30, 30, 50, 0.9) 100%);
+  border-radius: 24px;
   padding: 2rem;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(226, 232, 240, 0.5);
-}
-
-body.dark-mode .favoritos-section {
-  background: rgba(15, 15, 26, 0.8);
-  border-color: rgba(45, 40, 94, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(99, 102, 241, 0.15);
 }
 
 .favoritos-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
   flex-wrap: wrap;
   gap: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .favoritos-header h2 {
+  color: #f1f5f9;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin: 0;
-  font-size: 1.5rem;
-  color: #1e293b;
+  gap: 0.5rem;
 }
-
-body.dark-mode .favoritos-header h2 {
-  color: #e8eaed;
-}
-
-
-/* ============================================
- * FILTROS DE FAVORITOS
- * ============================================ */
 
 .favoritos-filtros {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .favoritos-filtros select {
-  padding: 0.625rem 1rem;
-  border: 1px solid rgba(203, 213, 225, 0.5);
+  background: rgba(30, 30, 50, 0.8);
+  color: #e5e7eb;
+  border: 1px solid rgba(99, 102, 241, 0.3);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.8);
-  color: #1e293b;
+  padding: 0.6rem 1rem;
   font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%239ca3af' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 2.25rem;
 }
 
-body.dark-mode .favoritos-filtros select {
-  background: rgba(45, 40, 94, 0.3);
-  border-color: rgba(45, 40, 94, 0.5);
-  color: #e8eaed;
+.favoritos-filtros select:hover {
+  border-color: rgba(99, 102, 241, 0.5);
+  background-color: rgba(40, 40, 70, 0.9);
 }
 
 .favoritos-filtros select:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
+
+/* GRID DE FAVORITOS */
 
 .favoritos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
+  margin-top: 1.5rem;
 }
+
+/* TARJETAS DE FAVORITOS */
 
 .favorito-card {
-  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  gap: 1rem;
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%);
+  padding: 1rem;
   border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(226, 232, 240, 0.5);
-  cursor: pointer;
+  border: 1px solid rgba(71, 85, 105, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-body.dark-mode .favorito-card {
-  background: rgba(30, 30, 50, 0.9);
-  border-color: rgba(45, 40, 94, 0.5);
+.favorito-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .favorito-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.15),
+              0 4px 12px rgba(0, 0, 0, 0.3);
+  border-color: rgba(99, 102, 241, 0.4);
 }
 
+.favorito-card:hover::before {
+  opacity: 1;
+}
 
-
+/* CONTENEDOR DE IMAGEN DEL MANGA */
 .favorito-img-container {
   position: relative;
-  height: 200px;
+  min-width: 130px;
+  max-width: 130px;
+  height: 180px;
+  border-radius: 12px;
   overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .favorito-img-container img {
@@ -239,168 +268,305 @@ body.dark-mode .favorito-card {
   transform: scale(1.05);
 }
 
+/* BOTÓN DE QUITAR FAVORITO */
 .btn-quitar-favorito {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  bottom: 8px;
+  right: 8px;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
   background: rgba(255, 255, 255, 0.95);
+  color: #ef4444;
+  border-radius: 50%;
   border: none;
+  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #e0245e;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.btn-quitar-favorito svg {
+  width: 18px;
+  height: 18px;
 }
 
 .btn-quitar-favorito:hover {
-  background: #e0245e;
+  background: #ef4444;
   color: white;
   transform: scale(1.1);
 }
 
-.favorito-img-container .estado-badge {
+/* ESTADO DEL MANGA */
+.estado-badge {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
-  padding: 0.375rem 0.75rem;
+  top: 8px;
+  left: 8px;
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 11px;
   font-weight: 600;
-}
-
-.estado-badge.publicacion {
-  background: rgba(16, 185, 129, 0.9);
   color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(4px);
+  z-index: 2;
 }
 
-.estado-badge.finalizado {
-  background: rgba(59, 130, 246, 0.9);
-  color: white;
+.estado-badge.publicacion { 
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
 }
 
-.estado-badge.pausado {
-  background: rgba(245, 158, 11, 0.9);
-  color: white;
+.estado-badge.finalizado { 
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
 }
 
+.estado-badge.pausado { 
+  background: linear-gradient(135deg, #eab308, #ca8a04);
+  box-shadow: 0 2px 8px rgba(234, 179, 8, 0.4);
+}
+
+/* INFORMACIÓN DEL MANGA */
 .favorito-info {
-  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  min-width: 0;
+  padding: 0.25rem 0;
 }
 
 .favorito-info h3 {
-  margin: 0 0 0.25rem 0;
   font-size: 1.1rem;
-  color: #1e293b;
-  font-weight: 600;
-  white-space: nowrap;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  color: #f1f5f9;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-body.dark-mode .favorito-info h3 {
-  color: #e8eaed;
 }
 
 .favorito-autor {
   margin: 0 0 0.75rem 0;
-  color: #64748b;
-  font-size: 0.875rem;
-}
-
-body.dark-mode .favorito-autor {
-  color: #9ca3af;
-}
-
-
-.favorito-generos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.favorito-generos .genero-tag {
-  padding: 0.25rem 0.625rem;
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  color: #94a3b8;
+  font-size: 0.85rem;
   font-weight: 500;
 }
 
-body.dark-mode .favorito-generos .genero-tag {
-  background: rgba(59, 130, 246, 0.2);
+/* GÉNEROS */
+.favorito-generos {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
 }
 
+.genero-tag {
+  background: rgba(99, 102, 241, 0.15);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  transition: all 0.2s ease;
+}
+
+.genero-tag:hover {
+  background: rgba(99, 102, 241, 0.25);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+/* META (volúmenes / capítulos) */
 .favorito-meta {
   display: flex;
   gap: 1rem;
-  color: #64748b;
+  color: #94a3b8;
   font-size: 0.8rem;
-}
-
-body.dark-mode .favorito-meta {
-  color: #9ca3af;
+  margin-top: auto;
 }
 
 .favorito-meta span {
   display: flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: 6px;
+  background: rgba(51, 65, 85, 0.5);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 500;
 }
+
+.favorito-meta svg {
+  opacity: 0.7;
+}
+
+/* ESTADO VACÍO */
 
 .favoritos-vacio {
   text-align: center;
   padding: 4rem 2rem;
-}
-
-.favoritos-vacio svg {
-  margin-bottom: 1.5rem;
-  opacity: 0.5;
-}
-
-.favoritos-vacio h3 {
-  margin: 0 0 0.5rem 0;
-  color: #64748b;
-  font-size: 1.25rem;
-}
-
-body.dark-mode .favoritos-vacio h3 {
-  color: #9ca3af;
-}
-
-.favoritos-vacio p {
-  margin: 0 0 1.5rem 0;
   color: #94a3b8;
 }
 
-body.dark-mode .favoritos-vacio p {
-  color: #6b7280;
+.favoritos-vacio svg {
+  opacity: 0.4;
+  margin-bottom: 1.5rem;
+}
+
+.favoritos-vacio h3 {
+  color: #e2e8f0;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.favoritos-vacio p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
 }
 
 .btn-explorar {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.875rem 1.5rem;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white;
-  text-decoration: none;
+  padding: 0.875rem 1.75rem;
   border-radius: 12px;
+  text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
 .btn-explorar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
+
+/* RESPONSIVE TARJETAS Y PERFIL */
+
+@media (max-width: 768px) {
+  .perfil-container {
+    padding: 0 1rem;
+    margin: 1rem auto;
+  }
+
+  .perfil-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .perfil-avatar img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .perfil-info h1 {
+    font-size: 1.4rem;
+  }
+
+  .perfil-stats {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .stat {
+    padding: 0.5rem 1rem;
+  }
+
+  .stat-numero {
+    font-size: 1.25rem;
+  }
+
+  .favoritos-section {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .favoritos-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .favoritos-filtros {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .favoritos-filtros select {
+    width: 100%;
+  }
+
+  .favoritos-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .favorito-card {
+    padding: 0.875rem;
+  }
+
+  .favorito-img-container {
+    min-width: 100px;
+    max-width: 100px;
+    height: 140px;
+  }
+
+  .favorito-info h3 {
+    font-size: 1rem;
+  }
+
+  .favorito-meta {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .favorito-meta span {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+
+  .favoritos-vacio {
+    padding: 2rem 1rem;
+  }
+
+  .favoritos-vacio h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .perfil-stats {
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .favorito-img-container {
+    min-width: 85px;
+    max-width: 85px;
+    height: 120px;
+  }
+
+  .genero-tag {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
+
+/* MODAL DE MANGA */
 
 .modalManga {
   position: fixed;
@@ -408,8 +574,8 @@ body.dark-mode .favoritos-vacio p {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
   display: none;
   justify-content: center;
   align-items: center;
@@ -422,102 +588,52 @@ body.dark-mode .favoritos-vacio p {
 }
 
 .modalManga .modal-content {
-  background: white;
+  background: linear-gradient(145deg, rgba(18, 18, 31, 0.98) 0%, rgba(25, 25, 45, 0.98) 100%);
+  color: #e5e7eb;
+  border: 1px solid rgba(99, 102, 241, 0.3);
   border-radius: 20px;
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
-  max-height: 90vh;
+  max-height: 85vh;
   overflow-y: auto;
-  position: relative;
   padding: 2rem;
-}
-
-body.dark-mode .modalManga .modal-content {
-  background: #1a1a2e;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6),
+              0 0 0 1px rgba(99, 102, 241, 0.1);
 }
 
 .modalManga .cerrarModal {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: rgba(100, 116, 139, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748b;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: all 0.2s ease;
 }
 
 .modalManga .cerrarModal:hover {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.2);
   color: #ef4444;
 }
 
-
-
-
-.modal-header-main {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.modal-image-container {
-  flex-shrink: 0;
-}
-
-.modal-image-container img {
-  width: 150px;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-.modal-info-container h2 {
-  margin: 0 0 0.5rem 0;
-  color: #1e293b;
+#modal-manga-titulo {
+  color: #f1f5f9;
   font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
 }
 
-body.dark-mode .modal-info-container h2 {
-  color: #e8eaed;
-}
-
-
-.modal-sinopsis-section,
-.modal-generos-section,
-.modal-episodios-section {
-  margin-bottom: 1.5rem;
-}
-
-.modal-sinopsis-section h3,
-.modal-generos-section h3,
-.modal-episodios-section h3 {
-  margin: 0 0 0.75rem 0;
-  color: #1e293b;
-  font-size: 1rem;
-}
-
-body.dark-mode .modal-sinopsis-section h3,
-body.dark-mode .modal-generos-section h3,
-body.dark-mode .modal-episodios-section h3 {
-  color: #e8eaed;
-}
-
-.modal-sinopsis-section p {
-  color: #64748b;
+#modal-manga-sinopsis {
+  color: #cbd5e1;
   line-height: 1.6;
-  margin: 0;
-}
-
-body.dark-mode .modal-sinopsis-section p {
-  color: #9ca3af;
 }
 
 .generos-list {
@@ -527,155 +643,7 @@ body.dark-mode .modal-sinopsis-section p {
 }
 
 .generos-list .genero-tag {
-  padding: 0.375rem 0.875rem;
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  border-radius: 20px;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-body.dark-mode .generos-list .genero-tag {
-  background: rgba(59, 130, 246, 0.2);
-}
-
-.episodios-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.toggle-episodios {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #64748b;
-  transition: transform 0.3s ease;
-}
-
-.toggle-episodios .chevron-icon.rotated {
-  transform: rotate(180deg);
-}
-
-.volumenes-lista {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.volumenes-lista.collapsed {
-  display: none;
-}
-
-.volumen-item {
-  background: rgba(241, 245, 249, 0.8);
-  border-radius: 12px;
-  padding: 1rem;
-}
-
-body.dark-mode .volumen-item {
-  background: rgba(45, 40, 94, 0.3);
-}
-
-.volumen-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.75rem;
-}
-
-.volumen-numero {
-  font-weight: 600;
-  color: #1e293b;
-}
-
-body.dark-mode .volumen-numero {
-  color: #e8eaed;
-}
-
-.volumen-caps {
-  color: #64748b;
-  font-size: 0.875rem;
-}
-
-body.dark-mode .volumen-caps {
-  color: #9ca3af;
-}
-
-
-.capitulos-lista {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.capitulo-item {
-  padding: 0.25rem 0.625rem;
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  border-radius: 6px;
-  font-size: 0.75rem;
-}
-@media (max-width: 768px) {
-  .perfil-container {
-    padding: 1rem;
-  }
-
-  .perfil-header {
-    flex-direction: column;
-    text-align: center;
-    padding: 1.5rem;
-  }
-
-  .perfil-stats {
-    justify-content: center;
-  }
-
-  .favoritos-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .favoritos-filtros {
-    width: 100%;
-  }
-
-  .favoritos-filtros select {
-    flex: 1;
-  }
-
-  .favoritos-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  }
-
-  .modal-header-main {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-}
-
-
-
-@media (max-width: 480px) {
-  .perfil-avatar img {
-    width: 100px;
-    height: 100px;
-  }
-
-  .perfil-info h1 {
-    font-size: 1.5rem;
-  }
-
-  .perfil-stats {
-    gap: 1rem;
-  }
-
-  .stat-numero {
-    font-size: 1.5rem;
-  }
-
-  .favoritos-grid {
-    grid-template-columns: 1fr;
-  }
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.3);
 }
