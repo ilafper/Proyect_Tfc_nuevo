@@ -40,6 +40,8 @@ $(document).ready(function () {
     window.location.href = "../html/login.html";
   });
 
+  
+
   // Función para mostrar modal de mensaje.
   function mostrarModalMensaje(titulo, mensaje, tipo) {
     const iconoSuccess = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#10b981" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
@@ -51,22 +53,13 @@ $(document).ready(function () {
     $('#modalMensaje').addClass('show');
   }
 
-  // Mostrar modal de confirmación para eliminar.
-
-  function mostrarModalEliminar(mangaId, nombreManga) {
-    $('#eliminarMangaId').val(mangaId);
-    $('#eliminarMangaNombre').text(nombreManga);
-    $('#modalEliminar').addClass('show');
-  }
-
   function cargarMangas() {
     $.ajax({
       url: `${API_URL}/mangas`,
       method: 'GET',
       success: function (mangas) {
         mangasData = mangas;
-        renderizarTabla(mangas);
-        renderizarCards(mangas);
+        mostrarTablaMangas(mangas);
       },
 
       error: function (err) {
@@ -76,9 +69,11 @@ $(document).ready(function () {
     });
   }
 
-  function renderizarTabla(mangas) {
-    const tbody = $('#mangasTableBody');
-    tbody.empty();
+
+
+  function mostrarTablaMangas(mangas) {
+    const tablaMangas = $('#mangasTableBody');
+    tablaMangas  .empty();
 
     if (mangas.length === 0) {
       tbody.html('<tr><td colspan="7" style="text-align:center;">No hay mangas registrados</td></tr>');
@@ -100,9 +95,9 @@ $(document).ready(function () {
 
       const estadoClass = manga.estado === 'En publicación' ? 'publicacion' : manga.estado === 'Finalizado' ? 'finalizado' : 'pausado';
 
-      const row = `
+      const cada_fila_manga = `
         <tr>
-          <td><img src="../src/frieren.png" alt="${manga.nombre}" class="manga-img"></td>
+          <td data-manga='${manga._id}'><img src="../src/frieren.png" alt="${manga.nombre}" class="manga-img"></td>
           <td><strong>${manga.nombre}</strong></td>
           <td>${manga.autor}</td>
           <td><div class="manga-generos">${generosHTML}${extraGeneros}</div></td>
@@ -115,7 +110,7 @@ $(document).ready(function () {
                   <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75l1.83-1.83z"/>
                 </svg>
               </button>
-              <button class="btn-action btn-eliminar" data-id="${manga._id}" data-nombre="${manga.nombre}">
+              <button data-ideliminar='${manga._id}' class="btn-action btn-eliminar" data-id="${manga._id}" data-nombre="${manga.nombre}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                   <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
@@ -124,51 +119,9 @@ $(document).ready(function () {
           </td>
         </tr>
       `;
-      tbody.append(row);
-    }
-  }
-
-  function renderizarCards(mangas) {
-    const container = $('#mangasCards');
-    container.empty();
-
-    for (let i = 0; i < mangas.length; i++) {
-      const manga = mangas[i];
-      const generos = Array.isArray(manga.genero) ? manga.genero : [];
-
-      // Unir primeros 2 géneros
-      let generosHTML = '';
-      for (let j = 0; j < generos.length && j < 2; j++) {
-        if (j > 0) generosHTML += ', ';
-        generosHTML += generos[j];
-      }
-
-      const estadoClass = manga.estado === 'En publicación' ? 'publicacion' :
-        manga.estado === 'Finalizado' ? 'finalizado' : 'pausado';
-
-      const card = `
-        <div class="manga-card">
-          <img src="../src/frieren.png" alt="${manga.nombre}" class="manga-card-img">
-          <h3>${manga.nombre}</h3>
-          <p><strong>Autor:</strong> ${manga.autor}</p>
-          <p><strong>Géneros:</strong> ${generosHTML}</p>
-          <p><strong>Volúmenes:</strong> ${manga.volumenes || 0}</p>
-          <p><span class="estado-badge ${estadoClass}">${manga.estado}</span></p>
-          <div class="table-actions" style="margin-top: 1rem;">
-            <button class="btn-action btn-editar" data-id="${manga._id}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75l1.83-1.83z"/>
-              </svg>
-            </button>
-            <button class="btn-action btn-eliminar" data-id="${manga._id}" data-nombre="${manga.nombre}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      `;
-      container.append(card);
+      tablaMangas.append(cada_fila_manga);
+      //console.log(row);
+      
     }
   }
 
@@ -184,8 +137,7 @@ $(document).ready(function () {
       }
     }
 
-    renderizarTabla(mangasFiltrados);
-    renderizarCards(mangasFiltrados);
+    mostrarTablaMangas(mangasFiltrados);
   });
 
   $('#btnCerrarModal, #btnCancelar').click(function () {
@@ -193,7 +145,10 @@ $(document).ready(function () {
   });
 
 
-
+  //modal creacion nuevo tomo
+  $('#btnNuevoManga').click(function () {
+    $('#modalManga').toggleClass('show');
+  });
 
 
 
@@ -220,8 +175,6 @@ $(document).ready(function () {
   $(document).on('click', '.btn-remove-temporada', function () {
     $(this).closest('.temporada-item').remove();
   });
-
-
 
 
 
@@ -346,33 +299,22 @@ $(document).ready(function () {
 
 
 
-
-
-  
-  // Evento delegado para botón editar
-  $(document).on('click', '.btn-editar', function () {
-    const mangaId = $(this).data('id');
-    editarManga(mangaId);
-  });
-
-  // Evento delegado para botón eliminar - muestra modal de confirmación
+  //eliminar
   $(document).on('click', '.btn-eliminar', function () {
-    const mangaId = $(this).data('id');
-    const nombreManga = $(this).data('nombre');
-    mostrarModalEliminar(mangaId, nombreManga);
+    console.log("modal click");
+    let mangaEliminar = $(this).data('ideliminar');
+    console.log(mangaEliminar);
+    
+    $('#modalEliminar').toggleClass('show');
   });
 
-  // Confirmar eliminación
-  $(document).on('click', '#btnConfirmarEliminar', function () {
-    const mangaId = $('#eliminarMangaId').val();
+  //eliminar
+  $(document).on('click', '.btn-cancelar', function () {
+    console.log("cancelar Modal");
+    
     $('#modalEliminar').removeClass('show');
-    eliminarManga(mangaId);
   });
 
-  // Cancelar eliminación
-  $(document).on('click', '#btnCancelarEliminar, #btnCerrarModalEliminar', function () {
-    $('#modalEliminar').removeClass('show');
-  });
 
   // Cerrar modal de mensaje
   $(document).on('click', '#btnCerrarMensaje', function () {

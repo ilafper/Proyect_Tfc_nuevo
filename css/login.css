@@ -1,6 +1,4 @@
-/* ============================================
- * LOGIN.CSS - Estilos de la pagina de login
- * ============================================ */
+
 
 * {
   margin: 0;
@@ -70,13 +68,9 @@ body {
   border-radius: 50%;
   bottom: -200px;
   right: -200px;
-  animation: float 15s ease-in-out infinite reverse;
 }
 
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(50px, 50px) scale(1.1); }
-}
+
 
 .custom-container {
   width: 100%;

@@ -18,15 +18,16 @@
 }
 
 .admin-header h1 {
-  color: #1e293b;
+  color: #f0f0f0;
   font-size: 2rem;
-  font-weight: 700;
   margin: 0;
 }
 
-body.dark-mode .admin-header h1 {
-  color: #e8eaed;
-}
+
+
+
+
+
 
 .btn-nuevo-manga {
   display: flex;
@@ -57,7 +58,7 @@ body.dark-mode .admin-header h1 {
   border: 1px solid rgba(226, 232, 240, 0.5);
 }
 
-body.dark-mode .mangas-table-container {
+.mangas-table-container {
   background: rgba(15, 15, 26, 0.8);
   border-color: rgba(45, 40, 94, 0.5);
 }
@@ -71,7 +72,7 @@ body.dark-mode .mangas-table-container {
   background: rgba(241, 245, 249, 0.8);
 }
 
-body.dark-mode .mangas-table thead {
+.mangas-table thead {
   background: rgba(45, 40, 94, 0.3);
 }
 
@@ -85,7 +86,7 @@ body.dark-mode .mangas-table thead {
   letter-spacing: 0.5px;
 }
 
-body.dark-mode .mangas-table th {
+.mangas-table th {
   color: #9ca3af;
 }
 
@@ -95,20 +96,16 @@ body.dark-mode .mangas-table th {
   color: #1e293b;
 }
 
-body.dark-mode .mangas-table td {
+.mangas-table td {
   border-top-color: rgba(45, 40, 94, 0.3);
   color: #e8eaed;
-}
-
-.mangas-table tbody tr {
-  transition: background 0.2s ease;
 }
 
 .mangas-table tbody tr:hover {
   background: rgba(59, 130, 246, 0.05);
 }
 
-body.dark-mode .mangas-table tbody tr:hover {
+ .mangas-table tbody tr:hover {
   background: rgba(45, 40, 94, 0.2);
 }
 
@@ -135,7 +132,7 @@ body.dark-mode .mangas-table tbody tr:hover {
   font-weight: 600;
 }
 
-body.dark-mode .genero-tag {
+ .genero-tag {
   background: rgba(45, 40, 94, 0.4);
   color: #a78bfa;
 }
@@ -231,7 +228,7 @@ body.dark-mode .genero-tag {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
-body.dark-mode .modal-form {
+ .modal-form {
   background: #0a0a0f;
   border: 1px solid rgba(45, 40, 94, 0.5);
 }
@@ -244,7 +241,7 @@ body.dark-mode .modal-form {
   border-bottom: 1px solid rgba(226, 232, 240, 0.5);
 }
 
-body.dark-mode .modal-form-header {
+ .modal-form-header {
   border-bottom-color: rgba(45, 40, 94, 0.5);
 }
 
@@ -254,7 +251,7 @@ body.dark-mode .modal-form-header {
   font-size: 1.5rem;
 }
 
-body.dark-mode .modal-form-header h2 {
+ .modal-form-header h2 {
   color: #e8eaed;
 }
 
@@ -295,7 +292,7 @@ body.dark-mode .modal-form-header h2 {
   font-size: 0.875rem;
 }
 
-body.dark-mode .form-group label {
+ .form-group label {
   color: #9ca3af;
 }
 
@@ -312,9 +309,9 @@ body.dark-mode .form-group label {
   transition: all 0.2s ease;
 }
 
-body.dark-mode .form-group input,
-body.dark-mode .form-group select,
-body.dark-mode .form-group textarea {
+ .form-group input,
+ .form-group select,
+ .form-group textarea {
   background: rgba(15, 15, 26, 0.8);
   border-color: rgba(45, 40, 94, 0.5);
   color: #e8eaed;
@@ -335,7 +332,7 @@ body.dark-mode .form-group textarea {
   font-size: 0.75rem;
 }
 
-body.dark-mode .form-group small {
+ .form-group small {
   color: #9ca3af;
 }
 
@@ -364,23 +361,19 @@ body.dark-mode .form-group small {
 
 .btn-add-temporada {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1rem;
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  border: 1px dashed #3b82f6;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.875rem;
-  transition: all 0.2s ease;
+  font-weight: bold;
   width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+
 }
 
-.btn-add-temporada:hover {
-  background: rgba(59, 130, 246, 0.15);
-}
 
 .temporada-item {
   background: rgba(241, 245, 249, 0.8);
@@ -390,7 +383,7 @@ body.dark-mode .form-group small {
   border: 1px solid rgba(226, 232, 240, 0.5);
 }
 
-body.dark-mode .temporada-item {
+ .temporada-item {
   background: rgba(45, 40, 94, 0.2);
   border-color: rgba(45, 40, 94, 0.5);
 }
@@ -407,7 +400,7 @@ body.dark-mode .temporada-item {
   font-size: 0.9rem;
 }
 
-body.dark-mode .temporada-header strong {
+ .temporada-header strong {
   color: #e8eaed;
 }
 
@@ -446,7 +439,7 @@ body.dark-mode .temporada-header strong {
   border-top: 1px solid rgba(226, 232, 240, 0.5);
 }
 
-body.dark-mode .form-actions {
+ .form-actions {
   border-top-color: rgba(45, 40, 94, 0.5);
 }
 
@@ -500,7 +493,7 @@ body.dark-mode .form-actions {
   transition: all 0.3s ease;
 }
 
-body.dark-mode .manga-card {
+ .manga-card {
   background: rgba(15, 15, 26, 0.8);
   border-color: rgba(45, 40, 94, 0.5);
 }
@@ -524,7 +517,7 @@ body.dark-mode .manga-card {
   font-size: 1.1rem;
 }
 
-body.dark-mode .manga-card h3 {
+ .manga-card h3 {
   color: #e8eaed;
 }
 
@@ -534,7 +527,7 @@ body.dark-mode .manga-card h3 {
   font-size: 0.875rem;
 }
 
-body.dark-mode .manga-card p {
+ .manga-card p {
   color: #9ca3af;
 }
 
@@ -607,7 +600,7 @@ body.dark-mode .manga-card p {
   animation: modalSlideIn 0.3s ease;
 }
 
-body.dark-mode .modal-confirm {
+ .modal-confirm {
   background: #1a1a2e;
 }
 
@@ -621,7 +614,7 @@ body.dark-mode .modal-confirm {
   margin: 0 0 0.5rem 0;
 }
 
-body.dark-mode .modal-confirm h3 {
+ .modal-confirm h3 {
   color: #e8eaed;
 }
 
@@ -630,7 +623,7 @@ body.dark-mode .modal-confirm h3 {
   margin: 0.5rem 0;
 }
 
-body.dark-mode .modal-confirm p {
+ .modal-confirm p {
   color: #9ca3af;
 }
 
@@ -677,7 +670,7 @@ body.dark-mode .modal-confirm p {
   animation: modalSlideIn 0.3s ease;
 }
 
-body.dark-mode .modal-mensaje {
+ .modal-mensaje {
   background: #1a1a2e;
 }
 
@@ -691,7 +684,7 @@ body.dark-mode .modal-mensaje {
   margin: 0 0 0.5rem 0;
 }
 
-body.dark-mode .modal-mensaje h3 {
+ .modal-mensaje h3 {
   color: #e8eaed;
 }
 
@@ -700,7 +693,7 @@ body.dark-mode .modal-mensaje h3 {
   margin: 0.5rem 0;
 }
 
-body.dark-mode .modal-mensaje p {
+ .modal-mensaje p {
   color: #9ca3af;
 }
 
