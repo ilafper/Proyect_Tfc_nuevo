@@ -344,7 +344,9 @@ $(document).ready(function () {
   $(document).on('click', '#btnConfirmarEliminar', async function () {
     const mangaId = $('#eliminarMangaId').val();
     const mangaNombre = $('#eliminarMangaNombre').text();
-
+    console.log("mangaEliminar:");
+    console.log(mangaId);
+    
     console.log("Confirmando eliminación de:", mangaId, mangaNombre);
 
     if (!mangaId) {
@@ -353,7 +355,7 @@ $(document).ready(function () {
     }
 
     try {
-      // IMPORTANTE: Enviamos solo el ID como string
+      
       const response = await $.ajax({
         type: 'DELETE',
         url: `${API_URL}/borrarmanga`,
