@@ -40,7 +40,7 @@ $(document).ready(function () {
     window.location.href = "../html/login.html";
   });
 
-  
+
 
   // Función para mostrar modal de mensaje.
   function mostrarModalMensaje(titulo, mensaje, tipo) {
@@ -73,7 +73,7 @@ $(document).ready(function () {
 
   function mostrarTablaMangas(mangas) {
     const tablaMangas = $('#mangasTableBody');
-    tablaMangas  .empty();
+    tablaMangas.empty();
 
     if (mangas.length === 0) {
       tbody.html('<tr><td colspan="7" style="text-align:center;">No hay mangas registrados</td></tr>');
@@ -110,7 +110,7 @@ $(document).ready(function () {
                   <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75l1.83-1.83z"/>
                 </svg>
               </button>
-              <button data-ideliminar='${manga._id}' class="btn-action btn-eliminar" data-id="${manga._id}" data-nombre="${manga.nombre}">
+              <button data-ideliminar='${manga._id}'    data-ideliminar='${manga.nombre}'    class="btn-action btn-eliminar" data-id="${manga._id}" data-nombre="${manga.nombre}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                   <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
@@ -119,9 +119,12 @@ $(document).ready(function () {
           </td>
         </tr>
       `;
+
+
+
       tablaMangas.append(cada_fila_manga);
       //console.log(row);
-      
+
     }
   }
 
@@ -156,6 +159,7 @@ $(document).ready(function () {
     //longitud actual de temporadas
     const numTemporadas = $('.temporada-item').length;
     //objeto temporada nueva
+
     const nuevaTemporada = `
       <div class="temporada-item">
         <div class="temporada-header">
@@ -168,6 +172,8 @@ $(document).ready(function () {
         </div>
       </div>
     `;
+
+
     $(this).before(nuevaTemporada);
   });
 
@@ -179,35 +185,52 @@ $(document).ready(function () {
 
 
 
-  //guardar manga.
+  //guardar manga
   $('.guardarManga').click(async function (e) {
     e.preventDefault();
     const temporadas = [];
     let totalCapitulos = 0;
     let totalVolumenes = 0;
 
+
+    let numeroCapituloActual = 1; // Empezamos desde el capítulo 1
+
     // recoger cada temporada.
     const temporadasTotales = $('.temporada-item');
+    console.log(temporadasTotales);
 
     for (let i = 0; i < temporadasTotales.length; i++) {
       const item = temporadasTotales[i];
       const tomo = parseInt($(item).find('.tomo-numero').val());
-      const capitulosStr = $(item).find('.tomo-capitulos').val();
+      const capitulosInput = $(item).find('.tomo-capitulos').val();
 
+      // Convertir a número
+      const cantidadCapitulos = parseInt(capitulosInput);
+
+      // Crear array de capítulos secuencialmente
       const capitulosArray = [];
-      if (capitulosStr) {
-        const numeros = capitulosStr.split(',');
-        for (let j = 0; j < numeros.length; j++) {
-          const num = parseInt(numeros[j].trim());
-          if (!isNaN(num)) {
-            capitulosArray.push(num);
-          }
-        }
+
+
+      for (let j = 0; j < cantidadCapitulos; j++) {
+        capitulosArray.push(numeroCapituloActual + j);
       }
 
-      totalCapitulos += capitulosArray.length;
+      console.log(capitulosArray);
+      // Actualizar el contador para el próximo tomo
+      numeroCapituloActual += cantidadCapitulos;
+
+      totalCapitulos += cantidadCapitulos;
       totalVolumenes++;
-      temporadas.push({ tomo, capitulos: capitulosArray });
+
+      // Asegurar que el tomo tenga un valor válido
+      const tomoValido = !isNaN(tomo) && tomo > 0 ? tomo : i + 1;
+
+      temporadas.push({
+        tomo: tomoValido,
+        capitulos: capitulosArray
+      });
+
+      console.log(`Tomo ${tomoValido} (${cantidadCapitulos} caps):`, capitulosArray);
     }
 
     // Validar que haya al menos una temporada
@@ -216,7 +239,6 @@ $(document).ready(function () {
       return;
     }
 
-   
     const generos = [];
     const checkboxesGeneros = $('input[name="generos"]:checked');
     for (let i = 0; i < checkboxesGeneros.length; i++) {
@@ -229,7 +251,7 @@ $(document).ready(function () {
       return;
     }
 
-    // campos oblihatorio(autor, nombre, sinopsis)
+    // campos obligatorios(autor, nombre, sinopsis)
     const nombre = $('#nombre').val().trim();
     const autor = $('#autor').val().trim();
     const sinopsis = $('#sinopsis').val().trim();
@@ -266,7 +288,6 @@ $(document).ready(function () {
     console.log('Datos del manga a guardar:', mangaData);
 
     try {
-      
       const response = await $.ajax({
         type: 'POST',
         url: `${API_URL}/nuevomanga`,
@@ -285,6 +306,12 @@ $(document).ready(function () {
       // Recargar la lista de mangas
       cargarMangas();
 
+      // Limpiar el formulario
+      $('#formManga')[0].reset();
+
+      // Limpiar temporadas
+      $('.temporada-item').remove();
+
     } catch (error) {
       console.error('Error al guardar manga:', error);
 
@@ -299,19 +326,90 @@ $(document).ready(function () {
 
 
 
-  //eliminar
+  // Eliminar manga - CORREGIDO
   $(document).on('click', '.btn-eliminar', function () {
-    console.log("modal click");
-    let mangaEliminar = $(this).data('ideliminar');
-    console.log(mangaEliminar);
-    
-    $('#modalEliminar').toggleClass('show');
+    const mangaId = $(this).attr('data-ideliminar');  // Usamos attr() para obtener el ID
+    const mangaNombre = $(this).data('nombre');
+
+    console.log("ID a eliminar:", mangaId);
+    console.log("Nombre:", mangaNombre);
+
+    // Guardar los datos en el modal de confirmación
+    $('#eliminarMangaId').val(mangaId);
+    $('#eliminarMangaNombre').text(mangaNombre);
+    $('#modalEliminar').addClass('show');
   });
+
+  // Confirmar eliminación
+  $(document).on('click', '#btnConfirmarEliminar', async function () {
+    const mangaId = $('#eliminarMangaId').val();
+    const mangaNombre = $('#eliminarMangaNombre').text();
+
+    console.log("Confirmando eliminación de:", mangaId, mangaNombre);
+
+    if (!mangaId) {
+      mostrarModalMensaje('Error', 'No se encontró el ID del manga', 'error');
+      return;
+    }
+
+    try {
+      // IMPORTANTE: Enviamos solo el ID como string
+      const response = await $.ajax({
+        type: 'DELETE',
+        url: `${API_URL}/borrarmanga`,
+        contentType: 'application/json',
+        data: JSON.stringify(mangaId),  // Solo el ID como string
+        dataType: 'json'
+      });
+
+      console.log('Respuesta de eliminación:', response);
+
+      // Cerrar modal de confirmación
+      $('#modalEliminar').removeClass('show');
+
+      // Mostrar mensaje de éxito
+      mostrarModalMensaje('Éxito', `Manga "${mangaNombre}" eliminado correctamente`, 'success');
+
+      // Recargar la lista de mangas después de 1 segundo
+      setTimeout(() => {
+        cargarMangas();
+      }, 1000);
+
+    } catch (error) {
+      console.error('Error al eliminar manga:', error);
+      console.error('Error detallado:', error.responseJSON);
+
+      let mensajeError = 'Error al eliminar el manga';
+      if (error.responseJSON && error.responseJSON.mensaje) {
+        mensajeError = error.responseJSON.mensaje;
+      } else if (error.responseJSON && error.responseJSON.error) {
+        mensajeError = error.responseJSON.error;
+      } else if (error.statusText) {
+        mensajeError = error.statusText;
+      }
+
+      // Cerrar modal de confirmación
+      $('#modalEliminar').removeClass('show');
+
+      mostrarModalMensaje('Error', mensajeError, 'error');
+    }
+  });
+
+  // Función para mostrar modal de mensaje
+  function mostrarModalMensaje(titulo, mensaje, tipo) {
+    const iconoSuccess = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#10b981" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
+    const iconoError = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#ef4444" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
+
+    $('#modalMensajeTitulo').text(titulo);
+    $('#modalMensajeTexto').text(mensaje);
+    $('#modalMensajeIcono').html(tipo === 'success' ? iconoSuccess : iconoError);
+    $('#modalMensaje').addClass('show');
+  }
 
   //eliminar
   $(document).on('click', '.btn-cancelar', function () {
     console.log("cancelar Modal");
-    
+
     $('#modalEliminar').removeClass('show');
   });
 
