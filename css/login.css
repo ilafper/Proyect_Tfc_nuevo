@@ -201,7 +201,7 @@ body {
 }
 
 /* Botones con efectos modernos */
-.botonUni {
+.botonUni, .botonUni2 {
   margin-top: 2rem;
   padding: 1.125rem;
   background: linear-gradient(135deg, #2D285E 0%, #1f1b42 100%);

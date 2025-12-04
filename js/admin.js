@@ -297,8 +297,6 @@ $(document).ready(function () {
     }
   });
 
-
-
   //eliminar
   $(document).on('click', '.btn-eliminar', function () {
     console.log("modal click");
