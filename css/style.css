@@ -1252,8 +1252,8 @@ body {
   }
 
   .card {
-    flex: 0 1 calc(50% - 0.25rem);
-    min-width: 130px;
+    
+    min-width: 300px;
     padding: 6px;
   }
 
