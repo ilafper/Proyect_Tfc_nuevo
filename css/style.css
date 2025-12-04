@@ -1208,9 +1208,11 @@ body {
 }
 
 /* Pantallas muy pequeñas */
-@media (max-width: 400px) {
-  
 
+
+
+
+@media (max-width: 400px) {
 
 .modal-image-container{
   width: 100% !important;
