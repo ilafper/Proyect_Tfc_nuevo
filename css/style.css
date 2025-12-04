@@ -1179,8 +1179,7 @@ body {
   }
 
   .card {
-    
-    min-width: 140px;
+    min-width: 300px;
     max-width: 200px;
     padding: 8px;
     border-radius: 14px;
