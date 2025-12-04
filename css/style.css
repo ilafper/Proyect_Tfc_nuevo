@@ -383,7 +383,7 @@ body {
   justify-content: center;
 }
 
-/* Cards con glassmorphism */
+
 .card {
   background: rgba(15, 15, 26, 0.8);
   backdrop-filter: blur(20px) saturate(180%);
@@ -399,18 +399,7 @@ body {
   max-width: 280px;
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #2D285E 0%, #1a1a2e 100%);
-  transform: scaleX(0);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: left;
-}
+
 
 .card:hover::before {
   transform: scaleX(1);
@@ -428,7 +417,6 @@ body {
   object-fit: cover;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 12px;
-  filter: brightness(0.85) contrast(1.1);
 }
 
 .card:hover img {
@@ -1191,7 +1179,7 @@ body {
   }
 
   .card {
-    flex: 0 1 calc(50% - 0.5rem);
+    
     min-width: 140px;
     max-width: 200px;
     padding: 8px;
