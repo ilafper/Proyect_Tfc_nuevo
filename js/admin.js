@@ -95,6 +95,10 @@ $(document).ready(function () {
 
       const estadoClass = manga.estado === 'En publicación' ? 'publicacion' : manga.estado === 'Finalizado' ? 'finalizado' : 'pausado';
 
+
+      const mangaJSON = JSON.stringify(manga).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+
+
       const cada_fila_manga = `
         <tr>
           <td data-manga='${manga._id}'><img src="../src/frieren.png" alt="${manga.nombre}" class="manga-img"></td>
@@ -105,12 +109,13 @@ $(document).ready(function () {
           <td><span class="estado-badge ${estadoClass}">${manga.estado}</span></td>
           <td>
             <div class="table-actions">
-              <button class="btn-action btn-editar" data-id="${manga._id}">
+              <button class="btn-action btn-editar" data-datos='${mangaJSON}' data-id='${manga._id}'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                   <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75l1.83-1.83z"/>
                 </svg>
               </button>
-              <button data-ideliminar='${manga._id}'    data-ideliminar='${manga.nombre}'    class="btn-action btn-eliminar" data-id="${manga._id}" data-nombre="${manga.nombre}">
+
+              <button data-ideliminar='${manga._id}' data-ideliminar='${manga.nombre}'   class="btn-action btn-eliminar" data-id="${manga._id}" data-nombre="${manga.nombre}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                   <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
@@ -123,7 +128,7 @@ $(document).ready(function () {
 
 
       tablaMangas.append(cada_fila_manga);
-      //console.log(row);
+      //console.log(cada_fila_manga);
 
     }
   }
@@ -143,7 +148,9 @@ $(document).ready(function () {
     mostrarTablaMangas(mangasFiltrados);
   });
 
-  $('#btnCerrarModal, #btnCancelar').click(function () {
+  $('#btnCerrarModal').click(function () {
+    console.log("clickck");
+    
     $('#modalManga').removeClass('show');
   });
 
@@ -398,22 +405,38 @@ $(document).ready(function () {
 
   // Función para mostrar modal de mensaje
   function mostrarModalMensaje(titulo, mensaje, tipo) {
-    const iconoSuccess = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#10b981" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
-    const iconoError = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#ef4444" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
+
+
+    const icono_bien = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#10b981" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
+    const icono_mal = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#ef4444" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
 
     $('#modalMensajeTitulo').text(titulo);
     $('#modalMensajeTexto').text(mensaje);
-    $('#modalMensajeIcono').html(tipo === 'success' ? iconoSuccess : iconoError);
+    $('#modalMensajeIcono').html(tipo === 'success' ? icono_bien : icono_mal);
     $('#modalMensaje').addClass('show');
   }
 
-  //eliminar
+  //eliminar. editar
   $(document).on('click', '.btn-cancelar', function () {
     console.log("cancelar Modal");
 
     $('#modalEliminar').removeClass('show');
+    $('#modalEditar').removeClass('show');
   });
 
+
+
+
+  
+  $(document).on('click', '.btn-editar', function () {
+    console.log("ediatr modal  click click");
+    const datosJSON = $(this).attr('data-datos');
+    const mangaEditar= JSON.parse(datosJSON);
+
+    console.log(mangaEditar);
+    
+    $('#modalEditar').removeClass('show');
+  });
 
   // Cerrar modal de mensaje
   $(document).on('click', '#btnCerrarMensaje', function () {
