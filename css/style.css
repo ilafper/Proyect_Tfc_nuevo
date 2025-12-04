@@ -1210,8 +1210,15 @@ body {
 /* Pantallas muy pequeñas */
 @media (max-width: 400px) {
   
+
+
+.modal-image-container{
+  width: 100% !important;
+  height: auto !important;
+  }
+
   #modal-manga-image{
-    width:500px !important; 
+    width:100% !important; 
     
   }
   .cartasWrap {
