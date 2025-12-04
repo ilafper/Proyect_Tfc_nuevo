@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    
+
     <header class="navbar">
         <button class="menu-hamburguesa" id="btnMenuHamburguesa">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -27,9 +27,12 @@
         </section>
 
         <nav class="nav-links">
-            <a href="admin.html" class="active">Dashboard</a>
+            <a href="admin.html" class="active">Inicio</a>
+
             <a href="#">Mangas</a>
+
             <a href="#">Usuarios</a>
+
         </nav>
 
         <section class="avatar" id="avatarBtn">
@@ -38,6 +41,7 @@
     </header>
 
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <aside class="sidebar-mobile" id="sidebarMobile">
         <div class="sidebar-mobile-header">
             <img src="../src/logito.png" alt="Logo">
@@ -71,7 +75,7 @@
             </a>
         </nav>
     </aside>
-    
+
     <section class="modal-perfil" id="modalPerfil">
         <section class="modal-perfil-content">
             <p id="nombreUsuario" class="menu-item"></p>
@@ -132,9 +136,9 @@
         <section class="mangas-cards" id="mangasCards">
         </section>
     </main>
-    
 
-    
+
+
     <div class="mooodal" id="modalManga">
         <div class="modal-form">
             <div class="modal-form-header">
@@ -186,7 +190,7 @@
                     <label>Géneros *</label>
                     <section class="lista-generos">
 
-                       
+
                         <div class="generoChech">
                             <input type="checkbox" id="genero-shonen" name="generos" value="Shonen"
                                 class="checkbox-input">
@@ -235,7 +239,7 @@
                             </label>
                         </div>
 
-                        
+
                         <div class="generoChech">
                             <input type="checkbox" id="genero-accion" name="generos" value="Acción"
                                 class="checkbox-input">
@@ -412,7 +416,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="volumenes">Volúmenes *</label>
-                        <input type="number" id="volumenes" disabled  placeholder="0">
+                        <input type="number" id="volumenes" disabled placeholder="0">
                     </div>
                     <div class="form-group">
                         <label for="capitulos">Capítulos *</label>
@@ -470,20 +474,24 @@
             <input type="hidden" id="eliminarMangaId">
             <div class="modal-confirm-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
-                    <path fill="#ef4444" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                    <path fill="#ef4444"
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
                 </svg>
             </div>
 
 
 
-            
+
             <h3>¿Eliminar manga?</h3>
             <p>¿Estás seguro de que deseas eliminar "<span id="eliminarMangaNombre"></span>"?</p>
             <p class="modal-confirm-warning">Esta acción no se puede deshacer.</p>
             <div class="modal-confirm-actions">
                 <button type="button" class="btn-cancelar" id="btnCancelarEliminar">Cancelar</button>
                 <button type="button" class="btn-eliminar-confirm" id="btnConfirmarEliminar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"> <path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                    </svg>
                     Eliminar
                 </button>
 
@@ -491,6 +499,329 @@
 
         </div>
     </div>
+
+    <!-- Modal editar-->
+    <div class="mooodal" id="modalEditar">
+        <div class="modal-form">
+            <div class="modal-form-header">
+                <h2 id="modalTitleEditar">Editar MANGA</h2> 
+                <button class="btn-close-modal" id="btnCerrarModalEditar"> 
+                    <!-- SVG -->
+                </button>
+            </div>
+
+            <form id="formMangaEditar" class="manga-form"> 
+                <input type="hidden" id="mangaIdEditar"> 
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombreEditar">Nombre del Manga *</label>
+                        <input type="text" id="nombreEditar" required placeholder="Ej: One Piece"> <!-- OK -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="autorEditar">Autor *</label> 
+                        <input type="text" id="autorEditar" required placeholder="Ej: Eiichiro Oda"> 
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipoEditar">Tipo</label> 
+                        <select id="tipoEditar"> 
+                            <option value="manga">Manga</option>
+                            <option value="comic">Comic</option>
+                            <option value="novela">Novela</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estadoEditar">Estado</label> 
+                        <select id="estadoEditar"> 
+                            <option value="En publicación">En publicación</option>
+                            <option value="Finalizado">Finalizado</option>
+                            <option value="Pausado">Pausado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Géneros *</label>
+                    <section class="lista-generos">
+                        <section class="lista-generos">
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-shonen-editar" name="generosEditar" value="Shonen"
+                                    class="checkbox-input">
+                                <label for="genero-shonen-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Shonen</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-seinen-editar" name="generosEditar" value="Seinen"
+                                    class="checkbox-input">
+                                <label for="genero-seinen-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Seinen</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-shojo-editar" name="generosEditar" value="Shojo"
+                                    class="checkbox-input">
+                                <label for="genero-shojo-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Shojo</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-josei-editar" name="generosEditar" value="Josei"
+                                    class="checkbox-input">
+                                <label for="genero-josei-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Josei</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-kodomo-editar" name="generosEditar" value="Kodomo"
+                                    class="checkbox-input">
+                                <label for="genero-kodomo-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Kodomo</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-accion-editar" name="generosEditar" value="Acción"
+                                    class="checkbox-input">
+                                <label for="genero-accion-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Acción</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-aventura-editar" name="generosEditar" value="Aventura"
+                                    class="checkbox-input">
+                                <label for="genero-aventura-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Aventura</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-comedia-editar" name="generosEditar" value="Comedia"
+                                    class="checkbox-input">
+                                <label for="genero-comedia-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Comedia</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-drama-editar" name="generosEditar" value="Drama"
+                                    class="checkbox-input">
+                                <label for="genero-drama-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Drama</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-fantasia-editar" name="generosEditar" value="Fantasía"
+                                    class="checkbox-input">
+                                <label for="genero-fantasia-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Fantasía</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-ciencia-ficcion-editar" name="generosEditar"
+                                    value="Ciencia Ficción" class="checkbox-input">
+                                <label for="genero-ciencia-ficcion-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Ciencia Ficción</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-terror-editar" name="generosEditar" value="Terror"
+                                    class="checkbox-input">
+                                <label for="genero-terror-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Terror</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-misterio-editar" name="generosEditar" value="Misterio"
+                                    class="checkbox-input">
+                                <label for="genero-misterio-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Misterio</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-romance-editar" name="generosEditar" value="Romance"
+                                    class="checkbox-input">
+                                <label for="genero-romance-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Romance</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-deportes-editar" name="generosEditar" value="Deportes"
+                                    class="checkbox-input">
+                                <label for="genero-deportes-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Deportes</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-isekai-editar" name="generosEditar" value="Isekai"
+                                    class="checkbox-input">
+                                <label for="genero-isekai-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Isekai</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-mecha-editar" name="generosEditar" value="Mecha"
+                                    class="checkbox-input">
+                                <label for="genero-mecha-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Mecha</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-sliceoflife-editar" name="generosEditar"
+                                    value="Slice of Life" class="checkbox-input">
+                                <label for="genero-sliceoflife-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Slice of Life</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-harem-editar" name="generosEditar" value="Harem"
+                                    class="checkbox-input">
+                                <label for="genero-harem-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Harem</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-historico-editar" name="generosEditar"
+                                    value="Histórico" class="checkbox-input">
+                                <label for="genero-historico-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Histórico</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-psicologico-editar" name="generosEditar"
+                                    value="Psicológico" class="checkbox-input">
+                                <label for="genero-psicologico-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Psicológico</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-superpoderes-editar" name="generosEditar"
+                                    value="Superpoderes" class="checkbox-input">
+                                <label for="genero-superpoderes-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Superpoderes</span>
+                                </label>
+                            </div>
+
+                            <div class="generoChech">
+                                <input type="checkbox" id="genero-cyberpunk-editar" name="generosEditar"
+                                    value="Cyberpunk" class="checkbox-input">
+                                <label for="genero-cyberpunk-editar" class="checkbox-label">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="genre-name">Cyberpunk</span>
+                                </label>
+                            </div>
+                        </section>
+                    </section>
+                </div>
+
+                <div class="form-group">
+                    <label for="sinopsisEditar">Sinopsis *</label> 
+                    <textarea id="sinopsisEditar" rows="4" required></textarea> 
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="volumenesEditar">Volúmenes *</label> 
+                        <input type="number" id="volumenesEditar" disabled placeholder="0"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="capitulosEditar">Capítulos *</label> 
+                        <input type="number" id="capitulosEditar" disabled placeholder="0"> 
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editorialEditar">Editorial</label> 
+                        <input type="text" id="editorialEditar" placeholder="Ej: Shueisha"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="demografiaEditar">Demografía</label> 
+                        <select id="demografiaEditar"> 
+                            <option value="Shonen">Shonen</option>
+                            <option value="Seinen">Seinen</option>
+                            <option value="Shojo">Shojo</option>
+                            <option value="Josei">Josei</option>
+                            <option value="Kodomo">Kodomo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Temporadas (Tomos y Capítulos)</label>
+                    <div id="temporadasContainerEditar"> 
+                        <button type="button" class="btn-add-temporada" id="btnAddTemporadaEditar"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                            Agregar Tomo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancelar" id="btnCancelarEditar">Cancelar</button>
+                    
+                    <button type="submit" class="btn-guardar guardarCambios">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3zM6 6h9v4H6V6z" />
+                        </svg>
+                        Guardar cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
 
     <!-- Modal de mensaje -->
     <div class="mooodal" id="modalMensaje">
