@@ -358,9 +358,9 @@ $(document).ready(function () {
       
       const response = await $.ajax({
         type: 'DELETE',
-        url: `${API_URL}/borrarmanga`,
+        url: `${API_URL}/borrarmanga/${mangaId}`,
         contentType: 'application/json',
-        data: JSON.stringify(mangaId),  // Solo el ID como string
+        data: JSON.stringify(mangaId),
         dataType: 'json'
       });
 
