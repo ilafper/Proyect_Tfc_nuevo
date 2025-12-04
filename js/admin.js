@@ -491,6 +491,7 @@ $(document).ready(function () {
         }
 
         totalCapitulos += cantidadCapitulos;
+
         totalVolumenes++;
 
         // Crear HTML para esta temporada - mostrar solo la CANTIDAD
