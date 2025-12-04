@@ -360,7 +360,6 @@ $(document).ready(function () {
         type: 'DELETE',
         url: `${API_URL}/borrarmanga/${mangaId}`,
         contentType: 'application/json',
-        data: JSON.stringify(mangaId),
         dataType: 'json'
       });
 
