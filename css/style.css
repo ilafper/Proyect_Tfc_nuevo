@@ -1253,7 +1253,7 @@ body {
 
   .card {
     
-    min-width: 300px;
+    width: 80%;
     padding: 6px;
   }
 
