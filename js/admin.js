@@ -10,13 +10,13 @@ $(document).ready(function () {
   // Menu hamburguesa mobile
   $('#btnMenuHamburguesa').on('click', function () {
     $('#sidebarMobile').addClass('show');
-    
+
     $('body').css('overflow', 'hidden');
   });
 
   $('#btnCerrarSidebar').on('click', function () {
     $('#sidebarMobile').removeClass('show');
-    
+
     $('body').css('overflow', 'auto');
   });
 
@@ -84,7 +84,7 @@ $(document).ready(function () {
       const manga = mangas[i];
 
       const generos = Array.isArray(manga.genero) ? manga.genero : [];
-      
+
       let generosHTML = '';
 
       // Crear HTML de géneros (máximo 2)
@@ -196,52 +196,58 @@ $(document).ready(function () {
   //guardar manga
   $('.guardarManga').click(async function (e) {
     e.preventDefault();
+
+    // 1. Obtener la imagen
+    const imagenInput = document.getElementById('imagenManga');
+    if (!imagenInput.files || !imagenInput.files[0]) {
+      mostrarModalMensaje('Error', 'Debes seleccionar una imagen de portada', 'error');
+      return;
+    }
+
+    // 2. Validar que sea una imagen
+    const file = imagenInput.files[0];
+    if (!file.type.startsWith('image/')) {
+      mostrarModalMensaje('Error', 'El archivo debe ser una imagen', 'error');
+      return;
+    }
+
+    // 3. Validar tamaño (5MB máximo)
+    if (file.size > 5 * 1024 * 1024) {
+      mostrarModalMensaje('Error', 'La imagen es demasiado grande. Máximo 5MB', 'error');
+      return;
+    }
+
+    // 4. Tu código existente para recoger temporadas, géneros, etc...
     const temporadas = [];
     let totalCapitulos = 0;
     let totalVolumenes = 0;
+    let numeroCapituloActual = 1;
 
-
-    let numeroCapituloActual = 1; // Empezamos desde el capítulo 1
-
-    // recoger cada temporada.
     const temporadasTotales = $('.temporada-item');
-    console.log(temporadasTotales);
 
     for (let i = 0; i < temporadasTotales.length; i++) {
       const item = temporadasTotales[i];
       const tomo = parseInt($(item).find('.tomo-numero').val());
       const capitulosInput = $(item).find('.tomo-capitulos').val();
-
-      // Convertir a número
       const cantidadCapitulos = parseInt(capitulosInput);
-
-      // Crear array de capítulos secuencialmente
       const capitulosArray = [];
-
 
       for (let j = 0; j < cantidadCapitulos; j++) {
         capitulosArray.push(numeroCapituloActual + j);
       }
 
-      console.log(capitulosArray);
-      // Actualizar el contador para el próximo tomo
       numeroCapituloActual += cantidadCapitulos;
-
       totalCapitulos += cantidadCapitulos;
       totalVolumenes++;
 
-      // Asegurar que el tomo tenga un valor válido
       const tomoValido = !isNaN(tomo) && tomo > 0 ? tomo : i + 1;
 
       temporadas.push({
         tomo: tomoValido,
         capitulos: capitulosArray
       });
-
-      console.log(`Tomo ${tomoValido} (${cantidadCapitulos} caps):`, capitulosArray);
     }
 
-    // Validar que haya al menos una temporada
     if (totalVolumenes === 0) {
       mostrarModalMensaje('Error', 'Debes agregar al menos un tomo', 'error');
       return;
@@ -253,54 +259,54 @@ $(document).ready(function () {
       generos.push(checkboxesGeneros[i].value);
     }
 
-    // Validar que haya al menos un género
     if (generos.length === 0) {
       mostrarModalMensaje('Error', 'Debes seleccionar al menos un género', 'error');
       return;
     }
 
-    // campos obligatorios(autor, nombre, sinopsis)
     const nombre = $('#nombre').val().trim();
     const autor = $('#autor').val().trim();
     const sinopsis = $('#sinopsis').val().trim();
 
-    if (!nombre) {
-      mostrarModalMensaje('Error', 'El nombre del manga es obligatorio', 'error');
+    if (!nombre || !autor || !sinopsis) {
+      mostrarModalMensaje('Error', 'Faltan campos obligatorios', 'error');
       return;
     }
 
-    if (!autor) {
-      mostrarModalMensaje('Error', 'El autor es obligatorio', 'error');
-      return;
-    }
+    // 5. Crear FormData (IMPORTANTE: para enviar archivos)
+    const formData = new FormData();
 
-    if (!sinopsis) {
-      mostrarModalMensaje('Error', 'La sinopsis es obligatoria', 'error');
-      return;
-    }
+    // Agregar la imagen (nombre "imagen" debe coincidir con multer)
+    formData.append('imagen', imagenInput.files[0]);
 
-    const mangaData = {
+    // Agregar todos los otros datos
+    formData.append('nombre', nombre);
+    formData.append('autor', autor);
+    formData.append('sinopsis', sinopsis);
+    formData.append('volumenes', totalVolumenes);
+    formData.append('capitulos', totalCapitulos);
+    formData.append('editorial', $('#editorial').val().trim());
+    formData.append('demografia', $('#demografia').val());
+    formData.append('estado', $('#estado').val());
+    formData.append('tipo', $('#tipo').val());
+    formData.append('genero', JSON.stringify(generos));
+    formData.append('temporadas', JSON.stringify(temporadas));
+
+    console.log('Enviando manga con imagen:', {
       nombre: nombre,
-      autor: autor,
-      genero: generos,
-      sinopsis: sinopsis,
-      volumenes: totalVolumenes,
-      capitulos: totalCapitulos,
-      editorial: $('#editorial').val().trim(),
-      demografia: $('#demografia').val(),
-      estado: $('#estado').val(),
-      tipo: $('#tipo').val(),
-      temporadas: temporadas
-    };
-
-    console.log('Datos del manga a guardar:', mangaData);
+      imagen: imagenInput.files[0].name,
+      tamaño: (imagenInput.files[0].size / 1024).toFixed(2) + ' KB'
+    });
 
     try {
+      // 6. Enviar con FormData (NO con JSON.stringify)
       const response = await $.ajax({
         type: 'POST',
         url: `${API_URL}/nuevomanga`,
-        contentType: 'application/json',
-        data: JSON.stringify(mangaData)
+        data: formData,                    // FormData, no JSON
+        processData: false,                // IMPORTANTE: no procesar datos
+        contentType: false,                // IMPORTANTE: no establecer content-type
+        cache: false
       });
 
       console.log('Respuesta del servidor:', response);
@@ -317,6 +323,9 @@ $(document).ready(function () {
       // Limpiar el formulario
       $('#formManga')[0].reset();
 
+      // Limpiar el input file específicamente
+      imagenInput.value = '';
+
       // Limpiar temporadas
       $('.temporada-item').remove();
 
@@ -326,6 +335,8 @@ $(document).ready(function () {
       let mensajeError = 'Error al guardar el manga';
       if (error.responseJSON && error.responseJSON.mensaje) {
         mensajeError = error.responseJSON.mensaje;
+      } else if (error.statusText) {
+        mensajeError = error.statusText;
       }
 
       mostrarModalMensaje('Error', mensajeError, 'error');
@@ -705,5 +716,5 @@ $(document).ready(function () {
 
   cargarMangas();
 
-  
+
 });
