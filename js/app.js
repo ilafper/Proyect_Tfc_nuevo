@@ -72,11 +72,12 @@ $(document).ready(function () {
             tags += `<span class="cada_genero">${generos[j]}</span>`;
           }
           const extraTag = generos.length > 2 ? `<span class="cada_genero">+${generos.length - 2}</span>` : '';
+          
           //estructura manga
 
           const tarjeta = $(`
             <div class="card" data-manga='${JSON.stringify(manga)}'>
-              <img src="../src/frieren.png}" alt="${manga.nombre}">
+              <img src="../src/${manga.imagen}" alt="${manga.nombre}">
               <div class="card-info">
                 <h3>${manga.nombre}</h3>
                 <p>por ${manga.autor}</p>
@@ -92,7 +93,7 @@ $(document).ready(function () {
                     <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#e0245e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M12 21C12 21 5 14.5 5 9.5C5 6.42 7.42 4 10.5 4C12 4 13.5 5 14 6C14.5 5 16 4 17.5 4C20.58 4 23 6.42 23 9.5C23 14.5 16 21 16 21H12Z"/>
                     </svg>
-                    <p>Me gusta</p>
+                    
                   </button>
                   <button class="guardar" aria-label="guardar">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -229,7 +230,7 @@ $(document).ready(function () {
     const manga = JSON.parse($(this).attr('data-manga'));
 
     // imagen
-    $('#modal-manga-image').attr('src', '../src/frieren.png').attr('alt', manga.nombre);
+   $('#modal-manga-image').attr('src', `../src/${manga.imagen}`).attr('alt', manga.nombre);
 
     // Rellenar título
     $('#modal-manga-titulo').text(manga.nombre);
@@ -242,6 +243,8 @@ $(document).ready(function () {
     $('#modal-manga-sinopsis').text(sinopsis);
 
     // Rellenar géneros
+
+    
     const generos = manga.genero || [];
     let generosHTML = '';
     for (let i = 0; i < generos.length; i++) {
@@ -256,6 +259,8 @@ $(document).ready(function () {
 
     // Actualizar título de episodios
     $('#modal-episodios-titulo').text(`Episodios del 1 al ${totalCapitulos}`);
+
+
 
     // Recorrer las temporadas (tomos) del manga
     if (temporadas.length > 0) {
@@ -276,11 +281,11 @@ $(document).ready(function () {
         }
 
         // Verificar si este tomo está marcado como visto
-        const tomoVisto = usuario && usuario.capitulos_vistos && 
-          usuario.capitulos_vistos.some(cv => cv.mangaId === manga._id && cv.tomo === tomoNum && cv.visto);
+        const tomoVisto = usuario && usuario.capitulos_vistos && usuario.capitulos_vistos.some(cv => cv.mangaId === manga._id && cv.tomo === tomoNum && cv.visto);
+        
         const claseVisto = tomoVisto ? 'visto' : '';
         
-        // Icono: ojo tachado (no visto) o ojo normal (visto)
+        //icono visto e icono no visto
         const iconoOjo = tomoVisto 
           ? `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>`
           : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 7c2.76 0 5 2.24 5 5c0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28l.46.46A11.804 11.804 0 0 0 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22L21 20.73L3.27 3L2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65c0 1.66 1.34 3 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53c-2.76 0-5-2.24-5-5c0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15l.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>`;

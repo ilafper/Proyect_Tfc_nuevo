@@ -10,13 +10,13 @@ $(document).ready(function () {
   // Menu hamburguesa mobile
   $('#btnMenuHamburguesa').on('click', function () {
     $('#sidebarMobile').addClass('show');
-    $('#sidebarOverlay').addClass('show');
+    
     $('body').css('overflow', 'hidden');
   });
 
-  $('#btnCerrarSidebar, #sidebarOverlay').on('click', function () {
+  $('#btnCerrarSidebar').on('click', function () {
     $('#sidebarMobile').removeClass('show');
-    $('#sidebarOverlay').removeClass('show');
+    
     $('body').css('overflow', 'auto');
   });
 
@@ -84,6 +84,7 @@ $(document).ready(function () {
       const manga = mangas[i];
 
       const generos = Array.isArray(manga.genero) ? manga.genero : [];
+      
       let generosHTML = '';
 
       // Crear HTML de géneros (máximo 2)
@@ -98,10 +99,10 @@ $(document).ready(function () {
 
       const mangaJSON = JSON.stringify(manga).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
 
-
+      //cada manga tabla 
       const cada_fila_manga = `
         <tr>
-          <td data-manga='${manga._id}'><img src="../src/frieren.png" alt="${manga.nombre}" class="manga-img"></td>
+          <td data-manga='${manga._id}'><img src="../src/${manga.imagen}" alt="${manga.nombre}" class="manga-img"></td>
           <td><strong>${manga.nombre}</strong></td>
           <td>${manga.autor}</td>
           <td><div class="manga-generos">${generosHTML}${extraGeneros}</div></td>

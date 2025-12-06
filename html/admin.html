@@ -101,7 +101,7 @@
     </section>
 
 
-    <main class="admin-container">
+    <div class="admin-container">
         <section class="admin-header">
             <h1>Gestión de Mangas</h1>
             <button class="btn-nuevo-manga" id="btnNuevoManga">
@@ -134,8 +134,9 @@
         </section>
 
         <section class="mangas-cards" id="mangasCards">
+        
         </section>
-    </main>
+    </div>
 
 
 
@@ -143,16 +144,26 @@
         <div class="modal-form">
             <div class="modal-form-header">
                 <h2 id="modalTitle">Nuevo Manga</h2>
+                
                 <button class="btn-close-modal" id="btnCerrarModal">
+
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z" />
+                        <path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41z" />
                     </svg>
                 </button>
             </div>
 
             <form id="formManga" class="manga-form">
                 <input type="hidden" id="mangaId">
+                <!-- imagen-->
+
+
+                <div class="file-input">
+                    <label for="archivoBasico">Seleccionar imagen del manga:</label><br>
+                    <input type="file" id="archivoBasico" name="archivoBasico">
+                </div>
+
+
 
                 <div class="form-row">
                     <div class="form-group">
