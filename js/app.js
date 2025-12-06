@@ -73,9 +73,10 @@ $(document).ready(function () {
           }
           const extraTag = generos.length > 2 ? `<span class="cada_genero">+${generos.length - 2}</span>` : '';
           //estructura manga
+
           const tarjeta = $(`
             <div class="card" data-manga='${JSON.stringify(manga)}'>
-              <img src="../src/${imagen}" alt="${manga.nombre}">
+              <img src="../src/${manga.imagen}}" alt="${manga.nombre}">
               <div class="card-info">
                 <h3>${manga.nombre}</h3>
                 <p>por ${manga.autor}</p>
