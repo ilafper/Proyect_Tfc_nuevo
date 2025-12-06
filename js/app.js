@@ -75,7 +75,7 @@ $(document).ready(function () {
           //estructura manga
           const tarjeta = $(`
             <div class="card" data-manga='${JSON.stringify(manga)}'>
-              <img src="../src/frieren.png" alt="${manga.nombre}">
+              <img src="../src/${imagen}" alt="${manga.nombre}">
               <div class="card-info">
                 <h3>${manga.nombre}</h3>
                 <p>por ${manga.autor}</p>
