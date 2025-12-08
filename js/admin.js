@@ -428,148 +428,7 @@ $(document).ready(function () {
 
 
 
-
-  
-
-  
-
-  // Evento para agregar nueva temporada en edición
-  $(document).on('click', '#btnAddTemporadaEditar', function () {
-    const numTemporadas = $('#temporadasContainerEditar .temporada-item').length;
-    const nuevoTomoNum = numTemporadas + 1;
-
-    const nuevaTemporada = `
-        <div class="temporada-item">
-            <div class="temporada-header">
-                <strong>Tomo ${nuevoTomoNum}</strong>
-                <button type="button" class="btn-remove-temporada">Eliminar</button>
-            </div>
-            <div class="temporada-inputs">
-                <input type="number" class="tomo-numero" value="${nuevoTomoNum}" placeholder="Nº Tomo" min="1" required>
-                <input type="number" class="tomo-capitulos-cantidad" placeholder="Cantidad de capítulos" min="1" required>
-                <small class="tomo-descripcion"></small>
-            </div>
-        </div>
-    `;
-
-    // Insertar antes del botón "Agregar Tomo"
-    $(this).before(nuevaTemporada);
-
-    // Actualizar contadores
-    actualizarContadoresEdicion();
-  });
-
-  // Evento para eliminar temporada en edición
-  $(document).on('click', '#temporadasContainerEditar .btn-remove-temporada', function () {
-    $(this).closest('.temporada-item').remove();
-
-    // Reordenar números de tomo
-    $('#temporadasContainerEditar .temporada-item').each(function (index) {
-      $(this).find('.tomo-numero').val(index + 1);
-      $(this).find('.temporada-header strong').text(`Tomo ${index + 1}`);
-    });
-
-    // Actualizar contadores
-    actualizarContadoresEdicion();
-  });
-
-  // Función para actualizar contadores cuando cambian las temporadas - VERSIÓN SIMPLIFICADA
-  function actualizarContadoresEdicion() {
-    const temporadas = $('#temporadasContainerEditar .temporada-item');
-    let totalCapitulos = 0;
-
-    temporadas.each(function () {
-      const cantidad = parseInt($(this).find('.tomo-capitulos-cantidad').val()) || 0;
-      totalCapitulos += cantidad;
-    });
-
-    $('#volumenesEditar').val(temporadas.length);
-    $('#capitulosEditar').val(totalCapitulos);
-  }
-
-  // Actualizar contadores cuando se modifica el campo de capítulos
-  $(document).on('input', '#temporadasContainerEditar .tomo-capitulos-cantidad', function () {
-    actualizarContadoresEdicion();
-  });
-
-  // Cerrar modal editar
-  $('#btnCerrarModalEditar, #btnCancelarEditar').click(function () {
-    $('#modalEditar').removeClass('show');
-  });
-
- $(document).on('click', '.btn-editar', function () {
-    console.log("editar modal click");
-
-    const datosJSON = $(this).attr('data-datos');
-    console.log(datosJSON);
-
-    try {
-      const mangaEditar = JSON.parse(datosJSON);
-      console.log("Manga a editar:", mangaEditar);
-
-      // rellener
-      $('#mangaIdEditar').val(mangaEditar._id);
-      $('#nombreEditar').val(mangaEditar.nombre || '');
-      $('#autorEditar').val(mangaEditar.autor || '');
-      $('#tipoEditar').val(mangaEditar.tipo || 'manga');
-      $('#estadoEditar').val(mangaEditar.estado || 'En publicación');
-      $('#sinopsisEditar').val(mangaEditar.sinopsis || '');
-      $('#editorialEditar').val(mangaEditar.editorial || '');
-      $('#demografiaEditar').val(mangaEditar.demografia || 'Shonen');
-
-      
-      $('input[name="generosEditar"]').prop('checked', false);
-      if (mangaEditar.genero && Array.isArray(mangaEditar.genero)) {
-        mangaEditar.genero.forEach(genero => {
-          $(`input[name="generosEditar"][value="${genero}"]`).prop('checked', true);
-        });
-      }
-
-      // 3. CARGAR TEMPORADAS - VERSIÓN CON CANTIDAD
-      cargarTemporadasEnEdicion(mangaEditar);
-
-      // 4. Mostrar el modal
-      $('#modalEditar').addClass('show');
-
-    } catch (error) {
-      console.error("Error al parsear JSON:", error);
-      mostrarModalMensaje('Error', 'No se pudieron cargar los datos', 'error');
-    }
-  });
-
- 
-
-  // Actualizar contadores cuando se modifica el campo de capítulos
-  $(document).on('input', '#temporadasContainerEditar .tomo-capitulos', function () {
-    actualizarContadoresEdicion();
-  });
-
-  // Cerrar modal editar
-  $('#btnCerrarModalEditar, #btnCancelarEditar').click(function () {
-    $('#modalEditar').removeClass('show');
-  });
-
-  // Cerrar modal editar
-  $('#btnCerrarModalEditar, #btnCancelarEditar').click(function () {
-    $('#modalEditar').removeClass('show');
-  });
-
-
-
-  // Cerrar modal de mensaje
-  $(document).on('click', '#btnCerrarMensaje', function () {
-    $('#modalMensaje').removeClass('show');
-  });
-
-  cargarMangas();
-
-
-
-
-
-
-
-  $(document).on('click', '.btn-editar', function () {
+$(document).on('click', '.btn-editar', function () {
     console.log("editar modal click");
 
     const datosJSON = $(this).attr('data-datos');
@@ -597,7 +456,7 @@ $(document).ready(function () {
             });
         }
 
-        // 3. Cargar temporadas
+        // 3. CARGAR TEMPORADAS - VERSIÓN CON CANTIDAD
         cargarTemporadasEnEdicion(mangaEditar);
 
         // 4. Mostrar el modal
@@ -609,75 +468,94 @@ $(document).ready(function () {
     }
 });
 
-// Función para cargar temporadas (ya la tienes)
+// Función para cargar temporadas en el formulario de edición - VERSIÓN CON CANTIDAD
 function cargarTemporadasEnEdicion(manga) {
+    // Limpiar el contenedor de temporadas
     $('#temporadasContainerEditar').empty();
 
+    let totalVolumenes = 0;
+    let totalCapitulos = 0;
+
+    // Verificar si el manga tiene temporadas
     if (manga.temporadas && Array.isArray(manga.temporadas) && manga.temporadas.length > 0) {
+        // Si tiene temporadas estructuradas
         manga.temporadas.forEach((temporada, index) => {
             const tomoNum = temporada.tomo || (index + 1);
+
+            // Obtener la CANTIDAD de capítulos (no la lista)
             let cantidadCapitulos = 0;
-            
             if (Array.isArray(temporada.capitulos)) {
                 cantidadCapitulos = temporada.capitulos.length;
             } else if (typeof temporada.capitulos === 'number') {
                 cantidadCapitulos = temporada.capitulos;
             }
 
-            agregarTemporadaEditar(tomoNum, cantidadCapitulos);
-        });
-    } else {
-        const volumenes = manga.volumenes || 1;
-        const capitulosTotales = manga.capitulos || 10;
-        const capitulosPorVolumen = Math.max(1, Math.floor(capitulosTotales / volumenes));
+            totalCapitulos += cantidadCapitulos;
+            totalVolumenes++;
 
-        for (let i = 0; i < volumenes; i++) {
-            const tomoNum = i + 1;
-            let capitulosEsteTomo = capitulosPorVolumen;
-            
-            if (i === volumenes - 1) {
-                capitulosEsteTomo = capitulosTotales - (capitulosPorVolumen * (volumenes - 1));
-            }
-            
-            agregarTemporadaEditar(tomoNum, capitulosEsteTomo);
-        }
+            // Crear HTML para esta temporada - mostrar solo la CANTIDAD
+            const temporadaHTML = `
+                <div class="temporada-item">
+                    <div class="temporada-header">
+                        <strong>Tomo ${tomoNum}</strong>
+                        <button type="button" class="btn-remove-temporada">Eliminar</button>
+                    </div>
+                    <div class="temporada-inputs">
+                        <input type="number" class="tomo-numero" value="${tomoNum}" placeholder="Nº Tomo" min="1" required>
+                        <input type="number" class="tomo-capitulos-cantidad" value="${cantidadCapitulos}" 
+                               placeholder="Cantidad de capítulos" min="1" required>
+                        <small class="tomo-descripcion"></small>
+                    </div>
+                </div>
+            `;
+
+            $('#temporadasContainerEditar').append(temporadaHTML);
+        });
     }
-    
-    actualizarContadoresEditar();
+
+    // Agregar botón para añadir más tomos
+    $('#temporadasContainerEditar').append(`
+        <button type="button" class="btn-add-temporada" id="btnAddTemporadaEditar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+            </svg>
+            Agregar Tomo
+        </button>
+    `);
+
+    // Actualizar contadores
+    $('#volumenesEditar').val(totalVolumenes);
+    $('#capitulosEditar').val(totalCapitulos);
 }
 
-// Función para agregar una temporada en edición
-function agregarTemporadaEditar(tomoNum, capitulos) {
+// ========== EVENTO PARA AGREGAR NUEVO TOMO ==========
+$(document).on('click', '#btnAddTemporadaEditar', function() {
+    const totalTemporadas = $('.temporada-item').length;
+    const nuevoNumero = totalTemporadas + 1;
+    
     const temporadaHTML = `
         <div class="temporada-item">
             <div class="temporada-header">
-                <strong>Tomo ${tomoNum}</strong>
+                <strong>Tomo ${nuevoNumero}</strong>
                 <button type="button" class="btn-remove-temporada">Eliminar</button>
             </div>
             <div class="temporada-inputs">
-                <input type="number" class="tomo-numero" value="${tomoNum}" placeholder="Nº Tomo" min="1" required>
-                <input type="number" class="tomo-capitulos-cantidad" value="${capitulos}" 
-                       placeholder="Cantidad de capítulos" min="1" required>
+                <input type="number" class="tomo-numero" value="${nuevoNumero}" placeholder="Nº Tomo" min="1" required>
+                <input type="number" class="tomo-capitulos-cantidad" value="10" placeholder="Cantidad de capítulos" min="1" required>
+                <small class="tomo-descripcion"></small>
             </div>
         </div>
     `;
     
     // Insertar antes del botón de agregar
-    $('#btnAddTemporadaEditar').before(temporadaHTML);
-}
-
-// Evento para el botón "Agregar Tomo" en edición
-$(document).on('click', '#btnAddTemporadaEditar', function() {
-    const totalTemporadas = $('.temporada-item').length;
-    const nuevoNumero = totalTemporadas + 1;
-    agregarTemporadaEditar(nuevoNumero, 10);
+    $(this).before(temporadaHTML);
     actualizarContadoresEditar();
 });
 
-// Eliminar temporada
+// ========== EVENTO PARA ELIMINAR TOMO ==========
 $(document).on('click', '.btn-remove-temporada', function() {
     $(this).closest('.temporada-item').remove();
-    // Renumerar los tomos después de eliminar
+    // Renumerar los tomos
     $('.temporada-item').each(function(index) {
         const nuevoNumero = index + 1;
         $(this).find('.tomo-numero').val(nuevoNumero);
@@ -686,7 +564,7 @@ $(document).on('click', '.btn-remove-temporada', function() {
     actualizarContadoresEditar();
 });
 
-// Actualizar contadores de volúmenes y capítulos
+// ========== ACTUALIZAR CONTADORES AUTOMÁTICAMENTE ==========
 function actualizarContadoresEditar() {
     const totalVolumenes = $('.temporada-item').length;
     let totalCapitulos = 0;
@@ -751,7 +629,7 @@ $(document).on('submit', '#formMangaEditar', function(e) {
     enviarActualizacionManga(mangaId, datosActualizados);
 });
 
-// Función para enviar la actualización al backend
+// ========== FUNCIÓN PARA ENVIAR AL BACKEND ==========
 function enviarActualizacionManga(mangaId, datosActualizados) {
     // Mostrar loading
     $('.guardarMangaEditar').prop('disabled', true).html(`
@@ -762,9 +640,12 @@ function enviarActualizacionManga(mangaId, datosActualizados) {
         </svg>
         Guardando...
     `);
+    
+    console.log("Enviando actualización a:", `${API_URL}/editarmanga/${mangaId}`);
+    console.log("Datos a enviar:", datosActualizados);
 
     // Enviar como JSON
-    fetch(`/api/mangas/${mangaId}`, {
+    fetch(`https://api-tfc-five.vercel.app/api/editarmanga/${mangaId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -772,8 +653,9 @@ function enviarActualizacionManga(mangaId, datosActualizados) {
         body: JSON.stringify(datosActualizados)
     })
     .then(response => {
+        console.log("Response status:", response.status);
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
+            throw new Error(`HTTP ${response.status} - ${response.statusText}`);
         }
         return response.json();
     })
@@ -788,9 +670,13 @@ function enviarActualizacionManga(mangaId, datosActualizados) {
             mostrarModalMensaje('Éxito', 'Manga actualizado correctamente', 'success');
             
             // Recargar la lista de mangas
-            cargarMangas();
+            if (typeof cargarMangas === 'function') {
+                cargarMangas();
+            } else {
+                location.reload(); // O recarga la página si no tienes la función
+            }
         } else {
-            throw new Error(data.error || 'Error desconocido');
+            throw new Error(data.error || 'Error desconocido del servidor');
         }
     })
     .catch(error => {
@@ -808,33 +694,29 @@ function enviarActualizacionManga(mangaId, datosActualizados) {
     });
 }
 
-// Cerrar modal de edición
+// ========== CERRAR MODAL ==========
 $(document).on('click', '#btnCerrarModalEditar, #btnCancelarEditar', function() {
     $('#modalEditar').removeClass('show');
 });
 
+  // Cerrar modal editar
+  $('#btnCerrarModalEditar, #btnCancelarEditar').click(function () {
+    $('#modalEditar').removeClass('show');
+  });
+
+  // Cerrar modal editar
+  $('#btnCerrarModalEditar, #btnCancelarEditar').click(function () {
+    $('#modalEditar').removeClass('show');
+  });
 
 
 
+  // Cerrar modal de mensaje
+  $(document).on('click', '#btnCerrarMensaje', function () {
+    $('#modalMensaje').removeClass('show');
+  });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  cargarMangas();
 
 
 });
