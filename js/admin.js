@@ -70,7 +70,7 @@ $(document).ready(function () {
   }
 
 
-
+  //cada manga en tabla estilo 
   function mostrarTablaMangas(mangas) {
     const tablaMangas = $('#mangasTableBody');
     tablaMangas.empty();
@@ -133,6 +133,30 @@ $(document).ready(function () {
 
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
   $('#buscarManga').on('input', function () {
     const termino = $(this).val().toLowerCase();
@@ -428,17 +452,29 @@ $(document).ready(function () {
 
 
 
+
+
+
+
+
+
+
+
+  // click boton editar
 $(document).on('click', '.btn-editar', function () {
     console.log("editar modal click");
-
+    
+    //coger los datos 
     const datosJSON = $(this).attr('data-datos');
+
     console.log(datosJSON);
 
     try {
+
         const mangaEditar = JSON.parse(datosJSON);
         console.log("Manga a editar:", mangaEditar);
 
-        // 1. Llenar los campos básicos
+       
         $('#mangaIdEditar').val(mangaEditar._id);
         $('#nombreEditar').val(mangaEditar.nombre || '');
         $('#autorEditar').val(mangaEditar.autor || '');
@@ -448,27 +484,23 @@ $(document).on('click', '.btn-editar', function () {
         $('#editorialEditar').val(mangaEditar.editorial || '');
         $('#demografiaEditar').val(mangaEditar.demografia || 'Shonen');
 
-        // 2. Géneros
+        
         $('input[name="generosEditar"]').prop('checked', false);
         if (mangaEditar.genero && Array.isArray(mangaEditar.genero)) {
-            mangaEditar.genero.forEach(genero => {
-                $(`input[name="generosEditar"][value="${genero}"]`).prop('checked', true);
-            });
+            mangaEditar.genero.forEach(genero => {$(`input[name="generosEditar"][value="${genero}"]`).prop('checked', true);});
         }
 
-        // 3. CARGAR TEMPORADAS - VERSIÓN CON CANTIDAD
         cargarTemporadasEnEdicion(mangaEditar);
 
-        // 4. Mostrar el modal
+        //Mostrar el modal
         $('#modalEditar').addClass('show');
-
     } catch (error) {
         console.error("Error al parsear JSON:", error);
         mostrarModalMensaje('Error', 'No se pudieron cargar los datos', 'error');
     }
 });
 
-// Función para cargar temporadas en el formulario de edición - VERSIÓN CON CANTIDAD
+// cargar las temporadas
 function cargarTemporadasEnEdicion(manga) {
     // Limpiar el contenedor de temporadas
     $('#temporadasContainerEditar').empty();
@@ -477,7 +509,7 @@ function cargarTemporadasEnEdicion(manga) {
     let totalCapitulos = 0;
 
     // Verificar si el manga tiene temporadas
-    if (manga.temporadas && Array.isArray(manga.temporadas) && manga.temporadas.length > 0) {
+    if (manga.temporadas.length > 0) {
         // Si tiene temporadas estructuradas
         manga.temporadas.forEach((temporada, index) => {
             const tomoNum = temporada.tomo || (index + 1);
@@ -528,9 +560,10 @@ function cargarTemporadasEnEdicion(manga) {
     $('#capitulosEditar').val(totalCapitulos);
 }
 
-// ========== EVENTO PARA AGREGAR NUEVO TOMO ==========
+// añadir temporada
 $(document).on('click', '#btnAddTemporadaEditar', function() {
     const totalTemporadas = $('.temporada-item').length;
+    //numero de temporada en  funcion de los que haya
     const nuevoNumero = totalTemporadas + 1;
     
     const temporadaHTML = `
@@ -583,7 +616,7 @@ $(document).on('input', '.tomo-capitulos-cantidad', function() {
     actualizarContadoresEditar();
 });
 
-// ========== ENVÍO DEL FORMULARIO DE EDICIÓN ==========
+
 $(document).on('submit', '#formMangaEditar', function(e) {
     e.preventDefault();
     console.log("Enviando formulario de edición");
@@ -609,6 +642,9 @@ $(document).on('submit', '#formMangaEditar', function(e) {
 
     // 3. Recopilar temporadas
     const temporadas = [];
+
+
+
     $('.temporada-item').each(function(index) {
         const tomoNum = $(this).find('.tomo-numero').val();
         const capitulosCantidad = $(this).find('.tomo-capitulos-cantidad').val();
@@ -625,13 +661,23 @@ $(document).on('submit', '#formMangaEditar', function(e) {
     datosActualizados.volumenes = temporadas.length;
     datosActualizados.capitulos = temporadas.reduce((total, temp) => total + (temp.capitulos || 0), 0);
 
-    // 4. Enviar al backend
+    
     enviarActualizacionManga(mangaId, datosActualizados);
 });
 
-// ========== FUNCIÓN PARA ENVIAR AL BACKEND ==========
+
+
+
+
+
+
+
+
+
 function enviarActualizacionManga(mangaId, datosActualizados) {
-    // Mostrar loading
+   
+    //efecto de carga en el boton de guardar
+    //desabilitar boton para evitar multiple clicks
     $('.guardarMangaEditar').prop('disabled', true).html(`
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
             <path fill="currentColor" d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z">
