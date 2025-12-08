@@ -74,7 +74,6 @@ $(document).ready(function () {
           const extraTag = generos.length > 2 ? `<span class="cada_genero">+${generos.length - 2}</span>` : '';
           
           //estructura manga
-
           const tarjeta = $(`
             <div class="card" data-manga='${JSON.stringify(manga)}'>
               <img src="../src/${manga.imagen}" alt="${manga.nombre}">
@@ -244,7 +243,7 @@ $(document).ready(function () {
 
     // Rellenar géneros
 
-    
+
     const generos = manga.genero || [];
     let generosHTML = '';
     for (let i = 0; i < generos.length; i++) {
