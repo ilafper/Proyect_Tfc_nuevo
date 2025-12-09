@@ -287,7 +287,7 @@ $(document).ready(function () {
       return;
     }
 
-    const mangaData = {
+    const mangaNuevo = {
       nombre: nombre,
       autor: autor,
       genero: generos,
@@ -298,10 +298,11 @@ $(document).ready(function () {
       demografia: $('#demografia').val(),
       estado: $('#estado').val(),
       tipo: $('#tipo').val(),
-      temporadas: temporadas
+      temporadas: temporadas,
+      imagen:"frieren.png"
     };
 
-    console.log('Datos del manga a guardar:', mangaData);
+    console.log('Datos del manga a guardar:', mangaNuevo);
 
     try {
       
@@ -309,7 +310,7 @@ $(document).ready(function () {
         type: 'POST',
         url: `${API_URL}/nuevomanga`,
         contentType: 'application/json',
-        data: JSON.stringify(mangaData)
+        data: JSON.stringify(mangaNuevo)
       });
 
       console.log('Respuesta del servidor:', response);
