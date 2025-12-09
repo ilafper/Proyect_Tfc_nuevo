@@ -220,114 +220,96 @@ $(document).ready(function () {
   //guardar manga Nuevo
   $('.guardarManga').click(async function (e) {
     e.preventDefault();
-
-    // 1. Obtener la imagen
-    const imagenInput = document.getElementById('imagenManga');
-    if (!imagenInput.files || !imagenInput.files[0]) {
-      mostrarModalMensaje('Error', 'Debes seleccionar una imagen de portada', 'error');
-      return;
-    }
-
-    // 2. Validar que sea una imagen
-    const file = imagenInput.files[0];
-    if (!file.type.startsWith('image/')) {
-      mostrarModalMensaje('Error', 'El archivo debe ser una imagen', 'error');
-      return;
-    }
-
-    // 3. Validar tamaño (5MB máximo)
-    if (file.size > 5 * 1024 * 1024) {
-      mostrarModalMensaje('Error', 'La imagen es demasiado grande. Máximo 5MB', 'error');
-      return;
-    }
-
-    // 4. Tu código existente para recoger temporadas, géneros, etc...
     const temporadas = [];
     let totalCapitulos = 0;
     let totalVolumenes = 0;
-    let numeroCapituloActual = 1;
 
+    // recoger cada temporada.
     const temporadasTotales = $('.temporada-item');
 
     for (let i = 0; i < temporadasTotales.length; i++) {
       const item = temporadasTotales[i];
       const tomo = parseInt($(item).find('.tomo-numero').val());
-      const capitulosInput = $(item).find('.tomo-capitulos').val();
-      const cantidadCapitulos = parseInt(capitulosInput);
-      const capitulosArray = [];
+      const capitulosStr = $(item).find('.tomo-capitulos').val();
 
-      for (let j = 0; j < cantidadCapitulos; j++) {
-        capitulosArray.push(numeroCapituloActual + j);
+      const capitulosArray = [];
+      if (capitulosStr) {
+        const numeros = capitulosStr.split(',');
+        for (let j = 0; j < numeros.length; j++) {
+          const num = parseInt(numeros[j].trim());
+          if (!isNaN(num)) {
+            capitulosArray.push(num);
+          }
+        }
       }
 
-      numeroCapituloActual += cantidadCapitulos;
-      totalCapitulos += cantidadCapitulos;
+      totalCapitulos += capitulosArray.length;
       totalVolumenes++;
-
-      const tomoValido = !isNaN(tomo) && tomo > 0 ? tomo : i + 1;
-
-      temporadas.push({
-        tomo: tomoValido,
-        capitulos: capitulosArray
-      });
+      temporadas.push({ tomo, capitulos: capitulosArray });
     }
 
+    // Validar que haya al menos una temporada
     if (totalVolumenes === 0) {
       mostrarModalMensaje('Error', 'Debes agregar al menos un tomo', 'error');
       return;
     }
 
+   
     const generos = [];
     const checkboxesGeneros = $('input[name="generos"]:checked');
     for (let i = 0; i < checkboxesGeneros.length; i++) {
       generos.push(checkboxesGeneros[i].value);
     }
 
+    // Validar que haya al menos un género
     if (generos.length === 0) {
       mostrarModalMensaje('Error', 'Debes seleccionar al menos un género', 'error');
       return;
     }
 
+    // campos oblihatorio(autor, nombre, sinopsis)
     const nombre = $('#nombre').val().trim();
     const autor = $('#autor').val().trim();
     const sinopsis = $('#sinopsis').val().trim();
 
-    if (!nombre || !autor || !sinopsis) {
-      mostrarModalMensaje('Error', 'Faltan campos obligatorios', 'error');
+    if (!nombre) {
+      mostrarModalMensaje('Error', 'El nombre del manga es obligatorio', 'error');
       return;
     }
 
+    if (!autor) {
+      mostrarModalMensaje('Error', 'El autor es obligatorio', 'error');
+      return;
+    }
 
-    //const formData = new FormData();
+    if (!sinopsis) {
+      mostrarModalMensaje('Error', 'La sinopsis es obligatoria', 'error');
+      return;
+    }
 
-    // Agregar todos los otros datos
-    formData.append('nombre', nombre);
-    formData.append('autor', autor);
-    formData.append('sinopsis', sinopsis);
-    formData.append('volumenes', totalVolumenes);
-    formData.append('capitulos', totalCapitulos);
-    formData.append('editorial', $('#editorial').val().trim());
-    formData.append('demografia', $('#demografia').val());
-    formData.append('estado', $('#estado').val());
-    formData.append('tipo', $('#tipo').val());
-    formData.append('genero', JSON.stringify(generos));
-    formData.append('temporadas', JSON.stringify(temporadas));
-
-    console.log('Enviando manga con imagen:', {
+    const mangaData = {
       nombre: nombre,
-      imagen: imagenInput.files[0].name,
-      tamaño: (imagenInput.files[0].size / 1024).toFixed(2) + ' KB'
-    });
+      autor: autor,
+      genero: generos,
+      sinopsis: sinopsis,
+      volumenes: totalVolumenes,
+      capitulos: totalCapitulos,
+      editorial: $('#editorial').val().trim(),
+      demografia: $('#demografia').val(),
+      estado: $('#estado').val(),
+      tipo: $('#tipo').val(),
+      temporadas: temporadas
+    };
+
+    console.log('Datos del manga a guardar:', mangaData);
 
     try {
-      // 6. Enviar con FormData (NO con JSON.stringify)
+      
       const response = await $.ajax({
         type: 'POST',
         url: `${API_URL}/nuevomanga`,
-        data: formData,
-        processData: false,
-        contentType: false,
-        cache: false
+        contentType: 'application/json',
+        data: JSON.stringify(mangaData)
       });
 
       console.log('Respuesta del servidor:', response);
@@ -338,7 +320,7 @@ $(document).ready(function () {
       // Mostrar mensaje de éxito
       mostrarModalMensaje('Éxito', 'Manga creado correctamente', 'success');
 
-
+      // Recargar la lista de mangas
       cargarMangas();
 
     } catch (error) {
@@ -347,8 +329,6 @@ $(document).ready(function () {
       let mensajeError = 'Error al guardar el manga';
       if (error.responseJSON && error.responseJSON.mensaje) {
         mensajeError = error.responseJSON.mensaje;
-      } else if (error.statusText) {
-        mensajeError = error.statusText;
       }
 
       mostrarModalMensaje('Error', mensajeError, 'error');
