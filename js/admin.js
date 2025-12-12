@@ -49,6 +49,7 @@ $(document).ready(function () {
 
     $('#modalMensajeTitulo').text(titulo);
     $('#modalMensajeTexto').text(mensaje);
+
     $('#modalMensajeIcono').html(tipo === 'success' ? iconoSuccess : iconoError);
     $('#modalMensaje').addClass('show');
   }
@@ -428,6 +429,7 @@ $(document).ready(function () {
 
     $('#modalEliminar').removeClass('show');
     $('#modalEditar').removeClass('show');
+    $('.mooodal').removeClass('show');
   });
 
 
