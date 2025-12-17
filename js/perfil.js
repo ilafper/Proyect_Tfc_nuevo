@@ -76,79 +76,76 @@ $(document).ready(function () {
     }
 
     $('#favoritosVacio').hide();
+      favoritos.empty();
 
-    favoritos.show();
-
-    for (let i = 0; i < mangas.length; i++) {
-      let manga = mangas[i];
-      let generos = Array.isArray(manga.genero) ? manga.genero : [];
-
-      let generosHTML = '';
-      let maxGeneros = generos.length > 2 ? 2 : generos.length;
-      for (let j = 0; j < maxGeneros; j++) {
-        generosHTML += '<span class="genero-tag">' + generos[j] + '</span>';
+      if (!Array.isArray(mangas) || mangas.length === 0) {
+        mostrarVacio();
+        return;
       }
 
-      let extraGeneros = generos.length > 2
-        ? '<span class="genero-tag">+' + (generos.length - 2) + '</span>'
-        : '';
+      $('#favoritosVacio').hide();
+      favoritos.show();
 
-      let estadoClass = 'pausado';
-      if (manga.estado === 'En publicacion') estadoClass = 'publicacion';
-      if (manga.estado === 'Finalizado') estadoClass = 'finalizado';
+      for (let i = 0; i < mangas.length; i++) {
+        let manga = mangas[i] || {};
+        let generos = Array.isArray(manga.genero) ? manga.genero : [];
 
-      // const tarjeta = $(`
-      //       <div class="favorito-card" data-manga=${JSON.stringify(manga)}>
-      //     <div class="favorito-img-container">
-      //       <img src="../src/frieren.png" alt="manga.nombre">
+        let generosHTML = '';
+        let maxGeneros = Math.min(2, generos.length);
+        for (let j = 0; j < maxGeneros; j++) {
+          generosHTML += `<span class="genero-tag">${generos[j]}</span>`;
+        }
 
-      //       <button class="btn-quitar-favorito" data-id="manga._id" title="Quitar de favoritos">
-      //         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-      //           <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-      //         </svg>
-      //       </button>
+        let extraGeneros = generos.length > 2 ? `<span class="genero-tag">+${generos.length - 2}</span>` : '';
 
-      //       <span class="estado-badge estadoClass">
-      //         manga.estado
-      //       </span>
-      //     </div>
+        let estadoClass = 'pausado';
+        if (manga.estado === 'En publicacion') estadoClass = 'publicacion';
+        else if (manga.estado === 'Finalizado') estadoClass = 'finalizado';
 
-      //     <div class="favorito-info">
-      //       <h3>manga.nombre</h3>
-      //       <p class="favorito-autor">por manga.autor</p>
+        const tarjeta = $(
+          `
+          <div class="favorito-card" data-id="${manga._id || ''}">
+            <div class="favorito-img-container">
+              <img src="../src/${manga.imagen || 'placeholder.jpg'}" alt="${manga.nombre || 'Manga'}">
 
-      //       <div class="favorito-generos">
-      //         generosHTML extraGeneros
-      //       </div>
+              <button class="btn-quitar-favorito" data-id="${manga._id || ''}" title="Quitar de favoritos">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </button>
 
-      //       <div class="favorito-meta">
-      //         <span>
-      //           manga.volumenes vol.
-      //         </span>
-      //         <span>
-      //           manga.capitulos cap.
-      //         </span>
-      //       </div>
-      //     </div>
-      //   </div>
+              <span class="estado-badge ${estadoClass}">${manga.estado || 'Desconocido'}</span>
+            </div>
 
-      //     `);
+            <div class="favorito-info">
+              <h3>${manga.nombre || 'Sin título'}</h3>
+              <p class="favorito-autor">por ${manga.autor || '—'}</p>
 
-      //favoritos.append(tarjeta);
+              <div class="favorito-generos">
+                ${generosHTML} ${extraGeneros}
+              </div>
+
+              <div class="favorito-meta">
+                <span>
+                  ${manga.volumenes || 0} vol.
+                </span>
+                <span>
+                  ${manga.capitulos || 0} cap.
+                </span>
+              </div>
+            </div>
+          </div>
+          `
+        );
+
+        favoritos.append(tarjeta);
+      }
     }
-  }
-
-
 
   function mostrarVacio() {
     $('#favoritosGrid').hide();
     $('#favoritosVacio').show();
   }
-
-
-
-
-
 
 
 

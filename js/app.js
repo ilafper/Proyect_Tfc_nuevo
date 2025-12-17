@@ -179,7 +179,7 @@ $(document).ready(function () {
 
       const tarjeta = $(`
         <div class="card">
-          <img src="../src/frieren.png" alt="${manga.nombre}">
+          <img src="../src/${manga.imagen}" alt="${manga.nombre}">
           <div class="card-info">
             <h3>${manga.nombre}</h3>
             <p>por ${manga.autor}</p>

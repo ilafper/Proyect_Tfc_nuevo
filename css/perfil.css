@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   gap: 2rem;
-  background: rgba(255, 255, 255, 0.8);
+  background:#1a1a2e;
   backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 2rem;
@@ -74,7 +74,7 @@ body.dark-mode .btn-cambiar-avatar {
 .perfil-info h1 {
   margin: 0 0 0.5rem 0;
   font-size: 2rem;
-  color: #1e293b;
+  color: #3b82f6;
   font-weight: 700;
 }
 
@@ -88,7 +88,7 @@ body.dark-mode .perfil-info h1 {
   font-size: 1rem;
 }
 
-body.dark-mode .perfil-email {
+.perfil-email {
   color: #9ca3af;
 }
 
@@ -128,7 +128,7 @@ body.dark-mode .stat-label {
   border: 1px solid rgba(226, 232, 240, 0.5);
 }
 
-body.dark-mode .favoritos-section {
+.favoritos-section {
   background: rgba(15, 15, 26, 0.8);
   border-color: rgba(45, 40, 94, 0.5);
 }
@@ -156,9 +156,7 @@ body.dark-mode .favoritos-header h2 {
 }
 
 
-/* ============================================
- * FILTROS DE FAVORITOS
- * ============================================ */
+
 
 .favoritos-filtros {
   display: flex;
@@ -194,6 +192,13 @@ body.dark-mode .favoritos-filtros select {
   gap: 1.5rem;
 }
 
+/* compatibilidad con JS que usa el id #favoritosGrid */
+#favoritosGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
 .favorito-card {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
@@ -220,14 +225,15 @@ body.dark-mode .favorito-card {
   position: relative;
   height: 200px;
   overflow: hidden;
-  flex-shrink: 0;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
 }
 
-.favorito-img img {
+.favorito-img-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
 }
 
 .favorito-card:hover .favorito-img-container img {
@@ -354,6 +360,12 @@ body.dark-mode .favorito-meta {
   padding: 4rem 2rem;
 }
 
+/* compatibilidad con JS que usa el id #favoritosVacio */
+#favoritosVacio {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
 .favoritos-vacio svg {
   margin-bottom: 1.5rem;
   opacity: 0.5;
@@ -365,7 +377,7 @@ body.dark-mode .favorito-meta {
   font-size: 1.25rem;
 }
 
-body.dark-mode .favoritos-vacio h3 {
+.favoritos-vacio h3 {
   color: #9ca3af;
 }
 
