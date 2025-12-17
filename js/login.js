@@ -61,9 +61,9 @@ $(document).ready(function () {
 
         } catch (error) {
             if (error.status === 401) {
-                alert("Nombre o contraseña incorrecta.");
+                //alert("Nombre o contraseña incorrecta.");
             } else {
-                alert("Error en el servidor, intenta más tarde.");
+                //alert("Error en el servidor, intenta más tarde.");
             }
         }
     });
@@ -90,12 +90,12 @@ $(document).ready(function () {
         
 
         if (!nombre || !email || !password1 || !password2) {
-            alert("Por favor, completa todos los campos.");
+            //alert("Por favor, completa todos los campos.");
             return;
         }
 
         if (password1 !== password2) {
-            alert("Las contraseñas no coinciden.");
+            //alert("Las contraseñas no coinciden.");
             return;
         }
 
@@ -107,14 +107,14 @@ $(document).ready(function () {
                 data: JSON.stringify({ nombre, email, password1 })
             });
 
-            alert(response.mensaje);
+            //alert(response.mensaje);
 
             if (response.success) {
                 cambiar('login');
             }
 
         } catch (error) {
-            alert(error.responseJSON?.mensaje || "Error en el servidor");
+            //alert(error.responseJSON?.mensaje || "Error en el servidor");
         }
     });
 });

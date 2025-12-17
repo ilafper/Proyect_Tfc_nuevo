@@ -399,7 +399,7 @@ $(document).ready(function () {
       // Revertir el cambio visual si hay error
       $btn.toggleClass('visto');
       $btn.find('svg').replaceWith(isVisto ? iconoOjoTachado : iconoOjoNormal);
-      alert('Error al actualizar. Verifica que el endpoint /api/marcarCapituloVisto exista en tu API.');
+      //alert('Error al actualizar. Verifica que el endpoint /api/marcarCapituloVisto exista en tu API.');
     }
   });
 
@@ -424,7 +424,7 @@ $(document).ready(function () {
 
     const usuario = JSON.parse(localStorage.getItem('usuario'));
     
-    if (!usuario) return alert('Debes iniciar sesión');
+    if (!usuario) return //alert('Debes iniciar sesión');
     const $card = $btn.closest('.card');
     const mangaCompleto = JSON.parse($card.attr('data-manga'));
 
